@@ -15,11 +15,22 @@ class Doctor(db.Model, SerializerMixin):
 
     clients = db.relationship('Cleent', backref = 'doctor')
 
+    def __repr__(self):
+        return f'doctor: {self.name}, email: {self.email}, \nclients: {self.clients}'
+
 #create a class client
 class Client(db.Model, SerializerMixin):
     __tablename__ = 'clients'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String, nullable= False)
+    age = db.Column(db.Integer, 
+                    db.CheckConstraint('age >= 0'),
+                    nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+
+    def __repr__(self):
+        return f'name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
 
 #create a class medication
 class Medication(db.Model, SerializerMixin):
