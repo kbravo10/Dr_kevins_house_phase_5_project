@@ -10,6 +10,10 @@ class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+
+    clients = db.relationship('Cleent', backref = 'doctor')
 
 #create a class client
 class Client(db.Model, SerializerMixin):
