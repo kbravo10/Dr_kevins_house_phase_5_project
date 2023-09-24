@@ -5,3 +5,12 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+.navlink {
+  display: inline-block;
+  width: 200px;
+  height: 35px;
+  border: white;
+  font-size: 20px;
+  background-color: #1d3b58;
+  color: white;
+}
