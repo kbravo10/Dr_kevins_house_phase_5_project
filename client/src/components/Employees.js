@@ -7,7 +7,7 @@ function Employees(){
 
     //useeffect to only render once
     useEffect(() =>{
-        fetch("http://127.0.0.1:4000/medications")
+        fetch("http://127.0.0.1:4000/employees")
         .then((r) => (r.json()))
         .then((data) => (console.log(data)))
     })

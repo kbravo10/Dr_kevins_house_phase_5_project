@@ -8,12 +8,13 @@ from config import db, bcrypt
 #create a class doctor
 class Doctor(db.Model, SerializerMixin):
     __tablename__ = 'doctors'
+    serialize_rules =['-clients.doctor',]
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
 
-    clients = db.relationship('Cleent', backref = 'doctor')
+    clients = db.relationship('Client', backref = 'doctor')
 
     def __repr__(self):
         return f'doctor: {self.name}, email: {self.email}, \nclients: {self.clients}'
@@ -22,8 +23,11 @@ class Doctor(db.Model, SerializerMixin):
 class Client(db.Model, SerializerMixin):
     __tablename__ = 'clients'
 
+    serialize_rules =['-doctor.clients',]
+
+
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    name = db.Column(db.String, nullable= False)
+    name = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, 
                     db.CheckConstraint('age >= 0'),
                     nullable=False)

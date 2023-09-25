@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, Inventory, Med_times, Client
+from models import db, Inventory, Med_times, Client, Doctor
 
 if __name__ == '__main__':
     fake = Faker()
@@ -17,6 +17,8 @@ if __name__ == '__main__':
         # Seed code goes here!
         Inventory.query.delete()
         Med_times.query.delete()
+        Client.query.delete()
+        Doctor.query.delete()
 
         #inventory object
         inventory_all = []
@@ -32,10 +34,26 @@ if __name__ == '__main__':
             med_times_all.append(mt)
         db.session.add_all(med_times_all)
 
+        #doctors object
+        doctors_all = []
+        for i in range(3):
+            doc = Doctor(
+                name = fake.unique.name(),
+                email = fake.unique.email()
+            )
+            db.session.add(doc)
+            db.session.commit()
+            doctors_all.append(doc)
+
         # clients object
         client_all =[]
         for i in range(5):
-            client = Client()
+            doc = rc(doctors_all)
+            client = Client(
+                name = fake.unique.name(),
+                age = randint(1, 100),
+            )
+            client.doctor = doc
             client_all.append(client)
         db.session.add_all(client_all)
 

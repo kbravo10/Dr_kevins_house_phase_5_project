@@ -5,6 +5,10 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+body {
+  text-align: center;
+}
+
 .navlink {
   display: inline-block;
   width: 200px;
@@ -13,4 +17,13 @@
   font-size: 20px;
   background-color: #1d3b58;
   color: white;
+}
+
+.clientCard{
+  display: inline-block;
+  border: white;
+  background-color: #1d3b58;
+  color: white;
+  margin-top: 10px;
+  text-align: center;
 }

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import ClientInfo from "./ClientInfo";
 
 function Clients(){
 
@@ -9,12 +10,22 @@ function Clients(){
     useEffect(() =>{
         fetch("http://127.0.0.1:4000/clients")
         .then((r) => (r.json()))
-        .then((data) => (console.log(data)))
-    }
+        .then((data) => setClients((clients) => (clients = data)))
+    },[]
     )
 
     return(
-        <h1>clients</h1>
+        <div className="clientCards">
+            <h1>Clients</h1>
+            {clients.map((client, index) => {
+                return(
+                    <div key={index} className="clientDisplay">
+                        <ClientInfo key={index} clientInfo={client} />
+                    </div>
+                );
+                })}
+    
+        </div>
     )
 }
 

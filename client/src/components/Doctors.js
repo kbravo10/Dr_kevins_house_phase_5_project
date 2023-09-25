@@ -7,10 +7,10 @@ function Doctors(){
 
     //useeffect to only render once
     useEffect(() =>{
-        fetch("http://127.0.0.1:4000/medications")
+        fetch("http://127.0.0.1:4000/doctors")
         .then((r) => (r.json()))
         .then((data) => (console.log(data)))
-    })
+    },[])
 
     return(
         <h1>Doctors</h1>

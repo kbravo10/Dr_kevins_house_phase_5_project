@@ -33,14 +33,19 @@ def med_times():
 @app.route('/clients')
 def clients():
     clients = Client.query.all()
+    print(clients)
     client_dict = [c.to_dict() for c in clients]
-    return client_dict, 200
+    print(client_dict)
+    
+    return client_dict,200
 
 @app.route('/doctors')
 def doctors():
     doctors = Doctor.query.all()
+    print(doctors)
     doctor_dict = [doc.to_dict() for doc in doctors]
-    return doctor_dict, 200
+    # print(doctor_dict)
+    return doctor_dict,200
 
 @app.route('/medications')
 def medications():
