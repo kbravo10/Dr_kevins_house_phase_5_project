@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DoctorInfo from "./DoctorInfo";
 
 function Doctors(){
 
@@ -9,11 +10,20 @@ function Doctors(){
     useEffect(() =>{
         fetch("http://127.0.0.1:4000/doctors")
         .then((r) => (r.json()))
-        .then((data) => (console.log(data)))
+        .then((data) => setDoctors((doctors) => (doctors = data)))
     },[])
 
     return(
-        <h1>Doctors</h1>
+        <div className="cards">
+            <h1>Doctors</h1>
+            {doctors.map((doc, index) => {
+                return(
+                    <div key={index} className="doctorDisplay">
+                        <DoctorInfo key={index} docInfo={doc}/>
+                    </div>
+                )
+            })}
+        </div>
     )
 }
 

@@ -15,7 +15,7 @@ function Clients(){
     )
 
     return(
-        <div className="clientCards">
+        <div className="cards">
             <h1>Clients</h1>
             {clients.map((client, index) => {
                 return(
