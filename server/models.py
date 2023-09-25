@@ -56,6 +56,15 @@ class Med_times(db.Model, SerializerMixin):
     __tablename__ = 'med_times'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    time_slot = db.Column(db.String, nullable=False)
+    amount = db.Column(db.String)
+
+    signed_off = db.Column(db.Integer, db.ForeignKey('employees.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('clinets.id'))
+    medication_id = db.Column(db.Integer, db.ForeignKey('medications.id'))
+
+    clients = db.relationship('Client', back_populates = 'medications')
+    medications = db.relationship('Medication', back_populates = 'clients')
 
 #create a class inventory
 class Inventory(db.Model, SerializerMixin):
