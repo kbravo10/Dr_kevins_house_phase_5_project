@@ -32,6 +32,7 @@ class Client(db.Model, SerializerMixin):
                     db.CheckConstraint('age >= 0'),
                     nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+    medications = db.relationship('Med_times', back_populates = 'clients')
 
     def __repr__(self):
         return f'name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
