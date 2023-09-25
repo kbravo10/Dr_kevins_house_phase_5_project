@@ -40,7 +40,16 @@ class Client(db.Model, SerializerMixin):
 class Medication(db.Model, SerializerMixin):
     __tablename__ = 'medications'
 
+
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    name = db.Column(db.String, unique=True, nullable= False)
+    medication_use = db.Column(db.string, nullable=False)
+
+    clients = db.relationship('Med_times', back_populates='medications')
+
+    def __repr__(self):
+        return f'name: {self.name}, usage: {self.medication_use}, clients: {self.clients}'
+
 
 #create a class med times
 class Med_times(db.Model, SerializerMixin):
