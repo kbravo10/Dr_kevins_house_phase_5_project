@@ -22,7 +22,7 @@ def index():
 def inventory():
     inventory = Inventory.query.all()
     inventory_dict = [inv.to_dict() for inv in inventory]
-    return {}, 200
+    return inventory_dict, 200
 
 @app.route('/medication_times')
 def med_times():
@@ -57,7 +57,7 @@ def medications():
 def employees():
     employees = Employee.query.all()
     employee_dict = [employee.to_dict() for employee in employees]
-    return {}, 200
+    return employee_dict, 200
 
 
 if __name__ == '__main__':

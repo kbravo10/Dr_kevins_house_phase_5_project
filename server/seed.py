@@ -46,9 +46,28 @@ if __name__ == '__main__':
 
 
         #inventory object
+        inventory_list = [
+            "Adhesive bandages",
+            "Bandages",
+            "Gauze pads",
+            "Tape",
+            "Scissors",
+            "Tweezers",
+            "Thermometer",
+            "Pain reliever",
+            "Antiseptic wipes",
+            "Cold compress",
+            "Hot compress",
+            "First aid manual"
+        ]
+
         inventory_all = []
-        for i in range(5):
-            inventory = Inventory()
+        for i in range(len(inventory_list)):
+            inventory = Inventory(
+                inventory = inventory_list[i],
+                count_inventory = randint(0,10),
+                drug_facts = 'Na'
+            )
             inventory_all.append(inventory)
         db.session.add_all(inventory_all)
 

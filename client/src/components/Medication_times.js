@@ -22,8 +22,8 @@ function Medication_times(){
                     <tr>
                         <th scope="col">TIME</th>
                         <th scope="col">SIGNED OFF</th>
-                        <th scope="col">CLIENT I.D.</th>
-                        <th scope="col">MEDICATION I.D.</th>
+                        <th scope="col">CLIENT</th>
+                        <th scope="col">MEDICATION</th>
                     </tr>
                 </thead>
                 {med_times.map((mt, index) =>{
