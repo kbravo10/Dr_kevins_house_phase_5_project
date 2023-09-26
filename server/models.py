@@ -82,7 +82,7 @@ class Inventory(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     inventory = db.Column(db.String)
     count_inventory = db.Column(db.Integer)
-    drug_facts = db.Column(db.String)
+    instructions = db.Column(db.String)
 
 #create a class employee
 class Employee(db.Model, SerializerMixin):

@@ -66,7 +66,7 @@ if __name__ == '__main__':
             inventory = Inventory(
                 inventory = inventory_list[i],
                 count_inventory = randint(0,10),
-                drug_facts = 'Na'
+                instructions = 'Consult doctor'
             )
             inventory_all.append(inventory)
         db.session.add_all(inventory_all)
