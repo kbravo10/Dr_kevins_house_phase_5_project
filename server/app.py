@@ -51,7 +51,7 @@ def doctors():
 def medications():
     medications = Medication.query.all()
     medications_dict = [med.to_dict() for med in medications]
-    return {}, 200
+    return medications_dict, 200
 
 @app.route('/employees')
 def employees():

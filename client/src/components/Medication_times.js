@@ -17,12 +17,14 @@ function Medication_times(){
     return(
         <div class="text-center">
             <h1>Medication Schedule</h1>
-            <table className="medTimeTable">
-                <thead>
-                    <th scope="col">TIME</th>
-                    <th scope="col">SIGNED OFF</th>
-                    <th scope="col">CLIENT I.D.</th>
-                    <th scope="col">MEDICATION I.D.</th>
+            <table className='container'>
+                <thead >
+                    <tr>
+                        <th scope="col">TIME</th>
+                        <th scope="col">SIGNED OFF</th>
+                        <th scope="col">CLIENT I.D.</th>
+                        <th scope="col">MEDICATION I.D.</th>
+                    </tr>
                 </thead>
                 {med_times.map((mt, index) =>{
                     return(
