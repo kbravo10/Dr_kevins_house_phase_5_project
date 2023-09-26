@@ -18,7 +18,7 @@ function Medication_times(){
         <div class="text-center">
             <h1>Medication Schedule</h1>
             <table className='container'>
-                <thead >
+                <thead class='text-start'>
                     <tr>
                         <th scope="col">TIME</th>
                         <th scope="col">SIGNED OFF</th>

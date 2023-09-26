@@ -18,8 +18,10 @@ function Medications(){
             <h1>List Medications</h1>
             <table class="container">
                 <thead> 
-                    <th scope="col">Medication Name</th>
-                    <th scope="col">Description</th>
+                    <tr class='text-start'>
+                        <th scope="col">Medication Name</th>
+                        <th scope="col">Description</th>
+                    </tr>
                 </thead>
                 {medications.map((med, index) =>{
                     return(

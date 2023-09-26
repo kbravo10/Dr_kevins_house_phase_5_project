@@ -3,8 +3,8 @@ import React from "react";
 function MedTime({mt}){
     return(
         <>
-            <tbody>
-                <tr>
+            <tbody >
+                <tr class='text-start'>
                     <td>{mt.time_slot}</td>
                     <td>{mt.signed_off}</td>
                     <td>{mt.client_id}</td>

@@ -27,3 +27,7 @@ body {
   margin-top: 10px;
   text-align: center;
 }
+
+tr{
+  border: black
+}
