@@ -14,8 +14,6 @@ function NavBar(){
             <NavLink to="/inventory" exact className="navlink">
                 Inventory
             </NavLink>
-            
-            
             <NavLink to="/medications" exact className="navlink">
                 Medications
             </NavLink>
