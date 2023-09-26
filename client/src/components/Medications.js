@@ -10,7 +10,7 @@ function Medications(){
         fetch("http://127.0.0.1:4000/medications")
         .then((r) => (r.json()))
         .then((data) => (console.log(data)))
-    })
+    },[])
 
     return(
         <h1>Medicationsss</h1>

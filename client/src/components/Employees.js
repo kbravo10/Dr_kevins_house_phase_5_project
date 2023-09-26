@@ -10,7 +10,7 @@ function Employees(){
         fetch("http://127.0.0.1:4000/employees")
         .then((r) => (r.json()))
         .then((data) => (console.log(data)))
-    })
+    },[])
 
     return(
         <h1>Employees</h1>

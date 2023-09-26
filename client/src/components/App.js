@@ -11,7 +11,7 @@ import Employees from "./Employees";
 function App() {
 
   return (
-    <div className="App">
+    <div className="App" class="text-center">
       <h1>Dr.Kevins House</h1>
       <NavBar />
       <Switch>

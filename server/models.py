@@ -1,6 +1,8 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
+
 
 
 from config import db, bcrypt
@@ -45,7 +47,7 @@ class Medication(db.Model, SerializerMixin):
 
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    name = db.Column(db.String, unique=True, nullable= False)
+    name = db.Column(db.String, unique = True, nullable= False)
     medication_use = db.Column(db.String, nullable=False)
 
     clients = db.relationship('Med_times', back_populates='medications')
@@ -57,7 +59,8 @@ class Medication(db.Model, SerializerMixin):
 #create a class med times
 class Med_times(db.Model, SerializerMixin):
     __tablename__ = 'med_times'
-    serialize_rules =['-employee.med_times', '-clients.med_times', '-medications.med_times']
+    serialize_rules =['-employee.med_times', '-clients.med_times', 
+                      '-medications.med_times', '-clients.medications', '-medications.clients']
 
 
 
@@ -95,7 +98,7 @@ class Employee(db.Model, SerializerMixin):
         return AttributeError()
     
     @password_hash.setter
-    def pasword_hash(self, password):
+    def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
 

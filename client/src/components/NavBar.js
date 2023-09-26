@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //returns a navigation bar with links to a desired path
 function NavBar(){
     return(
-        <div className="navbar"> 
+        <div className="navbar" class="inline-block"> 
             <NavLink to="/inventory" exact className="navlink">
                 Inventory
             </NavLink>
