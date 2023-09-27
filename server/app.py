@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Doctor, Client,Med_times,Medication,Inventory,Employee
+from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
 # Views go here!
 
@@ -58,6 +58,12 @@ def employees():
     employees = Employee.query.all()
     employee_dict = [employee.to_dict() for employee in employees]
     return employee_dict, 200
+
+@app.route('/reports')
+def report():
+    report = Report.query.all()
+    report_dict = [rep.to_dict() for rep in report]
+    return report_dict, 200
 
 
 if __name__ == '__main__':
