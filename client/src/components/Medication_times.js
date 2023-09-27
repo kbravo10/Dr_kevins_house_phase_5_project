@@ -10,8 +10,6 @@ function Medication_times(){
         fetch("http://127.0.0.1:4000/medication_times")
         .then((r) => (r.json()))
         .then((data) => setMed_times((med_times) => (med_times = data)))
-
-        console.log("")
     },[])
 
     return(

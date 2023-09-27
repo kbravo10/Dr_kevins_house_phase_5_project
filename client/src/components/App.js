@@ -7,6 +7,7 @@ import Clients from "./Clients";
 import Medications from "./Medications";
 import Doctors from "./Doctors";
 import Employees from "./Employees";
+import Report from "./Report";
 
 function App() {
 
@@ -32,6 +33,9 @@ function App() {
         </Route>
         <Route exact path="/employees">
           <Employees />
+        </Route>
+        <Route exact path="/reports">
+          <Report />
         </Route>
       </Switch>
     </div>

@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, Inventory, Med_times, Client, Doctor, Medication, Employee
+from models import db, Inventory, Med_times, Client, Doctor, Medication, Employee, Report
 
 if __name__ == '__main__':
     fake = Faker()
@@ -21,6 +21,7 @@ if __name__ == '__main__':
         Doctor.query.delete()
         Medication.query.delete()
         Employee.query.delete()
+        Report.query.delete()
 
         #add data to medication class
         meds = {
@@ -111,7 +112,7 @@ if __name__ == '__main__':
             )
             employee.password_hash = employee.name + "pass"
             db.session.add(employee)
-            employees.append(employees)
+            employees.append(employee)
 
         #med_times object
         med_times_all = []
@@ -135,7 +136,24 @@ if __name__ == '__main__':
         db.session.add_all(med_times_all)
 
 
-      
+        #reports
+        report_types =[
+            'small-injury',
+            'end of shift',
+            'emergency'
+        ]
+        reports_list = []
+        for i in range(5):
+            emp = rc(employees)
+            report = Report(
+                type_of_report = rc(report_types),
+                context = fake.sentence(),
+                )
+            report.employee = emp
+            report.client = rc(client_all)
+            reports_list.append(report)
+        db.session.add_all(reports_list)
+
 
         db.session.commit()
         

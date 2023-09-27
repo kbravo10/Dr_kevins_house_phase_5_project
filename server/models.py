@@ -27,14 +27,16 @@ class Doctor(db.Model, SerializerMixin):
 class Client(db.Model, SerializerMixin):
     __tablename__ = 'clients'
 
-    serialize_rules =['-doctor.clients', '-medications.clients',]
+    serialize_rules =['-doctor.clients', '-medications.clients', '-reports.client',]
 
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, nullable=False)
+
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
     medications = db.relationship('Med_times', back_populates = 'clients')
+    reports = db.relationship('Report', backref = 'client')
 
     def __repr__(self):
         return f'name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
@@ -84,10 +86,23 @@ class Inventory(db.Model, SerializerMixin):
     count_inventory = db.Column(db.Integer)
     instructions = db.Column(db.String)
 
+#create a class Reports
+class Report(db.Model, SerializerMixin):
+    __tablename__ = 'reports'
+    serialize_rules =['-employee.reports', '-client.reports']
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    type_of_report = db.Column(db.String, nullable=False)
+    context = db.Column(db.String, nullable=False)
+
+    employee_id = db.Column(db.Integer, db.ForeignKey('employees.id'))
+    client_name = db.Column(db.String, db.ForeignKey('clients.name'))
+
+
 #create a class employee
 class Employee(db.Model, SerializerMixin):
     __tablename__ = 'employees'
-    serialize_rules =['-med_times.employee',]
+    serialize_rules =['-med_times.employee', '-reports.employee']
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable = False)
@@ -95,6 +110,7 @@ class Employee(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String, nullable=False)
 
     med_times = db.relationship('Med_times', backref = 'employee')
+    reports = db.relationship('Report', backref = 'employee')
 
     @hybrid_property
     def password_hash(self):

@@ -23,6 +23,9 @@ function NavBar(){
             <NavLink to="/employees" exact className="navlink">
                 List of Employees
             </NavLink>
+            <NavLink to="/reports" exact className="navlink">
+                REPORTS
+            </NavLink>
         </div>
     )
 }
