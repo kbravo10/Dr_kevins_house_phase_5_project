@@ -8,6 +8,7 @@ import Medications from "./Medications";
 import Doctors from "./Doctors";
 import Employees from "./Employees";
 import Report from "./Report";
+import Login from "./Login";
 
 function App() {
   //set a is logged in state to check if im logged in and display correct page
@@ -17,8 +18,10 @@ function App() {
 
   //check if logged in, if yes go to app page, if not display login page
   if (!isLogged) {
-    return <Login onLogin={setIsLogged} onGetName={getName} />;
+    return <Login onLogin={setIsLogged}/>;
   }
+
+
 
   return (
     <div className="App" class="text-center">
