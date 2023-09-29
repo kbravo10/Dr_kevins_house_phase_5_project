@@ -4,7 +4,7 @@ function MedTime({mt}){
 
     //handle employee signing off time slot
     function onHandleSignOff(){
-
+        
     }
     return(
         <>
