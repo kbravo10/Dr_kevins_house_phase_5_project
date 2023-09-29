@@ -66,6 +66,9 @@ def report():
     return report_dict, 200
 
 
+api.add_resource('/medication_times', endpoint='medication_times')
+
+
 if __name__ == '__main__':
     app.run(port=4000, debug=True)
 
