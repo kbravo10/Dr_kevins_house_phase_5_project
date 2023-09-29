@@ -16,9 +16,7 @@ function Report() {
       <h1>REPORTS</h1>
       <h2>View reports</h2>
       {reports.map((report, index) => {
-        return(
-        <ReportInfo key={index} report={report} />
-        )
+        return <ReportInfo key={index} report={report} />;
       })}
       <h2>Make report</h2>
       <form className="reportForm">

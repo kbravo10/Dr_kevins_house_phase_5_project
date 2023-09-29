@@ -10,6 +10,15 @@ import Employees from "./Employees";
 import Report from "./Report";
 
 function App() {
+  //set a is logged in state to check if im logged in and display correct page
+  //set name from login page and display at top for the welcome
+  const [isLogged, setIsLogged] = useState(false);
+  const [name, setName] = useState("");
+
+  //check if logged in, if yes go to app page, if not display login page
+  if (!isLogged) {
+    return <Login onLogin={setIsLogged} onGetName={getName} />;
+  }
 
   return (
     <div className="App" class="text-center">
@@ -39,9 +48,7 @@ function App() {
         </Route>
       </Switch>
     </div>
-  )
-
-
+  );
 }
 
 export default App;
