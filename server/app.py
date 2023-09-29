@@ -16,6 +16,13 @@ from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
+#login the user
+@app.route('/login')
+def login():
+    user = request.get_json()
+    user_name = Employee.query.filter(Employee.username == user['username']).first()
+    print(user_name)
+    return {}, 200
 
 #inventoury route
 @app.route('/inventory')
@@ -24,11 +31,33 @@ def inventory():
     inventory_dict = [inv.to_dict() for inv in inventory]
     return inventory_dict, 200
 
-@app.route('/medication_times')
-def med_times():
-    med_times = Med_times.query.order_by(Med_times.time_slot).all()
-    med_times_dict = [mt.to_dict() for mt in med_times]
-    return med_times_dict, 200
+#medication schedule route
+class MedicationTimes(Resource):
+    def get(self):
+        med_times = Med_times.query.order_by(Med_times.time_slot).all()
+        med_times_dict = [mt.to_dict() for mt in med_times]
+        return med_times_dict, 200
+    def post(self):
+        pass
+
+class MedicationTimesId(Resource):
+    def get(self, id):
+        # med_time_jason=request.get_json()
+        # print(med_time_jason)
+        med_time=Med_times.query.filter(Med_times.id == id).first()
+        med_time_dict = med_time.to_dict()
+        print(med_time_dict)
+        return med_time_dict, 200 
+    def patch(self, id):
+        print(id)
+        record = Med_times.query.filter(Med_times.id == id).first()
+        print(request.get_json()['signed_off'])
+        record.signed_off = request.get_json()['signed_off']
+        db.session.add(record)
+        db.session.commit()
+        
+        # print(record.signed_off)
+        return {}, 200
 
 @app.route('/clients')
 def clients():
@@ -53,6 +82,7 @@ def medications():
     medications_dict = [med.to_dict() for med in medications]
     return medications_dict, 200
 
+
 @app.route('/employees')
 def employees():
     employees = Employee.query.all()
@@ -66,7 +96,9 @@ def report():
     return report_dict, 200
 
 
-api.add_resource('/medication_times', endpoint='medication_times')
+api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_times')
+api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
+
 
 
 if __name__ == '__main__':

@@ -5,7 +5,18 @@ function MedTime({mt}){
     //handle employee signing off time slot
     const [signedOff, setSignrdOff] = useState(mt.signed_off)
     function onHandleSignOff(){
-        setSignrdOff((signedOff) => (signedOff = 1))
+        console.log(mt.employee)
+        setSignrdOff((signedOff) => (signedOff = mt.id))
+        console.log(mt.id)
+        fetch(`http://127.0.0.1:4000/medication_times/${mt.id}`,{
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                signed_off: (3).toString()
+            })
+        }).then((res) => (res.json()))
     }
     return(
         <>
