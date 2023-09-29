@@ -13,10 +13,10 @@ function Medication_times() {
   }, []);
 
   return (
-    <div class="text-center">
+    <div className="text-center">
       <h1>Medication Schedule</h1>
       <table className="container">
-        <thead class="text-start">
+        <thead className="text-start">
           <tr>
             <th scope="col">TIME</th>
             <th scope="col">SIGNED OFF</th>

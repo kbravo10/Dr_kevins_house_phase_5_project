@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 function MedTime({mt}){
 
     //handle employee signing off time slot
+    const [signedOff, setSignrdOff] = useState(mt.signed_off)
     function onHandleSignOff(){
-        
+        setSignrdOff((signedOff) => (signedOff = 1))
     }
     return(
         <>
             <tbody >
-                <tr class='text-start'>
+                <tr className='text-start'>
                     <td>{mt.time_slot}</td>
                     <td>
-                        <button>{mt.signed_off}</button>
+                        <button onClick={onHandleSignOff}>{signedOff}</button>
                     </td>
                     <td>{mt.client_id}. {mt.clients.name}</td>
                     <td>{mt.medication_id}. {mt.medications.name}</td>
