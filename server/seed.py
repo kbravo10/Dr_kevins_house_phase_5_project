@@ -110,7 +110,7 @@ if __name__ == '__main__':
                 name = fake.name(),
                 username = emails[i]
             )
-            employee.password_hash = employee.name + "pass"
+            employee.password_hash = "pass"
             db.session.add(employee)
             employees.append(employee)
 

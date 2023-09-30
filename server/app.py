@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, session
 from flask_restful import Resource
 
 # Local imports
@@ -17,12 +17,26 @@ from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 def index():
     return '<h1>Project Server</h1>'
 #login the user
-@app.route('/login')
-def login():
-    user = request.get_json()
-    user_name = Employee.query.filter(Employee.username == user['username']).first()
-    print(user_name)
-    return {}, 200
+
+class Login(Resource):
+    def post(self):
+        user = request.get_json()
+        print(user['username'])
+        user_info = Employee.query.filter(Employee.username == user['username']).first()
+        print(user['password'])
+        if user_info:
+            print('in system')
+            if user_info.authenticate(user['password']) == True:
+                user_dict = {
+                    'name': user_info.name,
+                    'id': user_info.id,
+                }
+                session['user_id'] = user_info.id
+                return user_dict, 200
+            else:
+                return {"errors":["Unathorized"]}, 401
+        else:
+                return {"errors":["Unathorized"]}, 401
 
 #inventoury route
 @app.route('/inventory')
@@ -53,11 +67,12 @@ class MedicationTimesId(Resource):
         record = Med_times.query.filter(Med_times.id == id).first()
         print(request.get_json()['signed_off'])
         record.signed_off = request.get_json()['signed_off']
+        request_dict = record.to_dict()
         db.session.add(record)
         db.session.commit()
         
         # print(record.signed_off)
-        return {}, 200
+        return request_dict, 200
 
 @app.route('/clients')
 def clients():
@@ -95,7 +110,7 @@ def report():
     report_dict = [rep.to_dict() for rep in report]
     return report_dict, 200
 
-
+api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_times')
 api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
 

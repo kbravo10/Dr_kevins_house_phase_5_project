@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-function MedTime({ mt }) {
+function MedTime({ mt, userInfo }) {
   //handle employee signing off time slot
   const [signedOff, setSignrdOff] = useState(mt.signed_off);
   function onHandleSignOff() {
-    console.log(mt.employee);
-    setSignrdOff((signedOff) => (signedOff = mt.id));
+    console.log(userInfo);
+    setSignrdOff((signedOff) => (signedOff = userInfo.name));
     console.log(mt.id);
     fetch(`http://127.0.0.1:4000/medication_times/${mt.id}`, {
       method: "PATCH",
@@ -13,7 +13,7 @@ function MedTime({ mt }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        signed_off: (3).toString(),
+        signed_off: userInfo.name,
       }),
     }).then((res) => res.json());
   }

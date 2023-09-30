@@ -13,15 +13,12 @@ import Login from "./Login";
 function App() {
   //set a is logged in state to check if im logged in and display correct page
   //set name from login page and display at top for the welcome
-  const [isLogged, setIsLogged] = useState(false);
-  const [name, setName] = useState("");
+  const [isLogged, setIsLogged] = useState(null);
 
   //check if logged in, if yes go to app page, if not display login page
   if (!isLogged) {
-    return <Login onLogin={setIsLogged}/>;
+    return <Login onLogin={setIsLogged} />;
   }
-
-
 
   return (
     <div className="App" class="text-center">
@@ -32,7 +29,7 @@ function App() {
           <Inventory />
         </Route>
         <Route exact path="/medication_times">
-          <Medication_times />
+          <Medication_times userInfo={isLogged} />
         </Route>
         <Route exact path="/clients">
           <Clients />

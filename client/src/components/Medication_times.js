@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MedTime from "./MedTime";
-function Medication_times() {
+function Medication_times({ userInfo }) {
   //declare usestate to hold med times from backend project
   const [med_times, setMed_times] = useState([]);
 
@@ -25,7 +25,7 @@ function Medication_times() {
           </tr>
         </thead>
         {med_times.map((mt, index) => {
-          return <MedTime key={index} mt={mt} />;
+          return <MedTime key={index} mt={mt} userInfo={userInfo} />;
         })}
       </table>
     </div>
