@@ -3,7 +3,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //returns a navigation bar with links to a desired path
-function NavBar() {
+function NavBar({onLogout}) {
+  function onHandleLogout(){
+    fetch("http://127.0.0.1:4000/logout", {
+      method: "DELETE"})
+      .then((r) => onLogout(null))
+  }
+
   return (
     <div className="navbar" class="inline-block">
       <NavLink to="/clients" exact className="navlink">
@@ -27,7 +33,7 @@ function NavBar() {
       <NavLink to="/reports" exact className="navlink">
         REPORTS
       </NavLink>
-      <button>
+      <button onClick={onHandleLogout}>
         log-out
       </button>
     </div>

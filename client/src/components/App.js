@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App" class="text-center">
       <h1>Dr.Kevins House</h1>
-      <NavBar />
+      <NavBar onLogout={setIsLogged}/>
       <Switch>
         <Route exact path="/inventory">
           <Inventory />
