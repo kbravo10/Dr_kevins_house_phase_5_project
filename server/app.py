@@ -38,6 +38,13 @@ class Login(Resource):
         else:
                 return {"errors":["Unathorized"]}, 401
 
+#logout route
+@app.route('/logout')
+def logout():
+    if session['user_id']:
+        session['user_id'] = None
+        return{'message', ['success logout']}, 204
+
 #inventoury route
 @app.route('/inventory')
 def inventory():
@@ -113,6 +120,7 @@ def report():
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_times')
 api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
+
 
 
 

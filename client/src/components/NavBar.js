@@ -1,3 +1,4 @@
+import { Button } from "bootstrap";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -26,6 +27,9 @@ function NavBar() {
       <NavLink to="/reports" exact className="navlink">
         REPORTS
       </NavLink>
+      <button>
+        log-out
+      </button>
     </div>
   );
 }
