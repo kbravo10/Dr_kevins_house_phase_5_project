@@ -1,13 +1,12 @@
-import { Button } from "bootstrap";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 //returns a navigation bar with links to a desired path
-function NavBar({onLogout}) {
-  function onHandleLogout(){
+function NavBar({ onLogout }) {
+  function onHandleLogout() {
     fetch("http://127.0.0.1:4000/logout", {
-      method: "DELETE"})
-      .then((r) => onLogout(null))
+      method: "DELETE",
+    }).then((r) => onLogout(null));
   }
 
   return (
@@ -33,9 +32,7 @@ function NavBar({onLogout}) {
       <NavLink to="/reports" exact className="navlink">
         REPORTS
       </NavLink>
-      <button onClick={onHandleLogout}>
-        log-out
-      </button>
+      <button onClick={onHandleLogout}>log-out</button>
     </div>
   );
 }
