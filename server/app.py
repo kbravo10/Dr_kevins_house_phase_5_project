@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session
+from flask import request, session 
 from flask_restful import Resource
 
 # Local imports
@@ -12,55 +12,53 @@ from config import app, db, api
 from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
 # Views go here!
-
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
+    
+#check if user logged in
+class CheckSession(Resource):
+    def get(self):
+        user = Employee.query.filter(Employee.id == session.get("user_id")).first()
+        print(session.get("user_id"))
+        if user:
+            user_info = {
+                'username': user.username,
+                'name': user.name,
+                'id': user.id
+            }
+            return user_info, 200
+        else:
+            return {'errors': ['Unathorized']}, 401 
 
 #login the user
 class Login(Resource):
     def post(self):
         user = request.get_json()
-        print(user['username'])
         user_info = Employee.query.filter(Employee.username == user['username']).first()
-        print(user['password'])
         if user_info:
-            print('in system')
             if user_info.authenticate(user['password']) == True:
                 user_dict = {
                     'name': user_info.name,
                     'id': user_info.id,
                 }
-                session['user_id'] = user_info.id
+                session["user_id"] = user_info.id
+                print(session['user_id'])
+                print(session.get('user_id'))
                 return user_dict, 200
             else:
                 return {"errors":["Unathorized"]}, 401
         else:
                 return {"errors":["Unathorized"]}, 401
 
-#check if user logged in
-@app.route('/check_session')
-def check_session():
-    if session['user_id']:
-        user_id=session['user_id']
-        user=Employee.query.filter(Employee.id = user_id).first()
-        if user:
-            user_info={
-                'id': user.id,
-                'name': user.name,
-                'username': user.username,
-            } 
-            return user_info, 200
-        else:
-            return {'errors': {'Unathorized'}}, 401
+
 
 #logout route
-@app.route('/logout')
-def logout():
-    if session['user_id']:
-        session['user_id'] = None
-        return{'message', ['success logout']}, 204
-    return {"errors":["Unathorized"]}, 401
+class Logout(Resource):
+    def delete(self):
+        print(session["user_id"])
+        if session.get('user_id'):
+            session['user_id'] = None
+            return{'message', ['success logout']}, 204
+        else:
+            return {"errors":["Unathorized"]}, 401
 
 #inventoury route
 @app.route('/inventory')
@@ -100,11 +98,9 @@ class MedicationTimesId(Resource):
 
 @app.route('/clients')
 def clients():
+    print(session.get('user_id'))
     clients = Client.query.all()
-    print(clients)
-    client_dict = [c.to_dict() for c in clients]
-    print(client_dict)
-    
+    client_dict = [c.to_dict() for c in clients]    
     return client_dict,200
 
 @app.route('/doctors')
@@ -135,8 +131,10 @@ def report():
     return report_dict, 200
 
 api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_times')
 api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 
 

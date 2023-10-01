@@ -14,13 +14,16 @@ function App() {
   //set a is logged in state to check if im logged in and display correct page
   //set name from login page and display at top for the welcome
   const [isLogged, setIsLogged] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   //chech session to see if the user is logged in to set the state of is logged
   //used for auto logged in
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/check_session")
-      .then((r) => r.json())
-      .then((data) => setIsLogged((isLogged) => (isLogged = data)));
+    fetch("http://127.0.0.1:4000/check_session").then((r) => {
+      if (r.ok) {
+        r.json().then((data) => setIsLogged((isLogged) => (isLogged = data)));
+      }
+    });
   }, []);
 
   //check if logged in, if yes go to app page, if not display login page
