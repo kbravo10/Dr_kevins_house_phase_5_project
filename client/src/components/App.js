@@ -17,11 +17,11 @@ function App() {
 
   //chech session to see if the user is logged in to set the state of is logged
   //used for auto logged in
-  useEffect(() =>{
-    fetch('http://127.0.0.1:4000/check_session')
-    .then((r) => (r.json()))
-    .then((data) => (setIsLogged((isLogged) => (isLogged = data))))
-  }, [])
+  useEffect(() => {
+    fetch("http://127.0.0.1:4000/check_session")
+      .then((r) => r.json())
+      .then((data) => setIsLogged((isLogged) => (isLogged = data)));
+  }, []);
 
   //check if logged in, if yes go to app page, if not display login page
   if (!isLogged) {
@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App" class="text-center">
       <h1>Dr.Kevins House</h1>
-      <NavBar onLogout={setIsLogged}/>
+      <NavBar onLogout={setIsLogged} />
       <Switch>
         <Route exact path="/inventory">
           <Inventory />
