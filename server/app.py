@@ -16,8 +16,8 @@ from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
-#login the user
 
+#login the user
 class Login(Resource):
     def post(self):
         user = request.get_json()
@@ -38,12 +38,29 @@ class Login(Resource):
         else:
                 return {"errors":["Unathorized"]}, 401
 
+#check if user logged in
+@app.route('/check_session')
+def check_session():
+    if session['user_id']:
+        user_id=session['user_id']
+        user=Employee.query.filter(Employee.id = user_id).first()
+        if user:
+            user_info={
+                'id': user.id,
+                'name': user.name,
+                'username': user.username,
+            } 
+            return user_info, 200
+        else:
+            return {'errors': {'Unathorized'}}, 401
+
 #logout route
 @app.route('/logout')
 def logout():
     if session['user_id']:
         session['user_id'] = None
         return{'message', ['success logout']}, 204
+    return {"errors":["Unathorized"]}, 401
 
 #inventoury route
 @app.route('/inventory')
