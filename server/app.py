@@ -11,10 +11,6 @@ from config import app, db, api
 # Add your model imports
 from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
-@app.route('/')
-def Home():
-    return  
-
 class Signup(Resource):
     def post(self):
         json = request.get_json()
@@ -172,5 +168,5 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 
 
 if __name__ == '__main__':
-    app.run(port=4000, debug=True)
+    app.run(port=5555, debug=True)
 

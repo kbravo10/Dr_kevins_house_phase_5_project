@@ -7,7 +7,7 @@ function Medications() {
 
   //useeffect to only render once
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/medications")
+    fetch("/medications")
       .then((r) => r.json())
       .then((data) => setMedication((medications) => (medications = data)));
   }, []);

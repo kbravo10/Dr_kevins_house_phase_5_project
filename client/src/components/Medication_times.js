@@ -7,7 +7,7 @@ function Medication_times({ userInfo }) {
   //use fetch to quire data
   //useeffect to only render once
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/medication_times")
+    fetch("/medication_times")
       .then((r) => r.json())
       .then((data) => setMed_times((med_times) => (med_times = data)));
   }, []);

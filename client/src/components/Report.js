@@ -7,7 +7,7 @@ function Report() {
 
   //fetch statem,ent to get data from report from backend
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/reports")
+    fetch("/reports")
       .then((r) => r.json())
       .then((data) => setReports((reports) => (reports = data)));
   }, []);

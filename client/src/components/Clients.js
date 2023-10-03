@@ -7,7 +7,7 @@ function Clients() {
 
   //useeffect to only render once fetch
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/clients")
+    fetch("/clients")
       .then((r) => r.json())
       .then((data) => setClients((clients) => (clients = data)));
   }, []);

@@ -7,7 +7,7 @@ function Inventory() {
   // use fetch to aquire data
   //use effect to only render once
   useEffect(() => {
-    fetch("http://127.0.0.1:4000/inventory")
+    fetch("/inventory")
       .then((r) => r.json())
       .then((data) => setInventory((inventory) => (inventory = data)));
   }, []);

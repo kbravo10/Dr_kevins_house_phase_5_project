@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //returns a navigation bar with links to a desired path
 function NavBar({ onLogout }) {
   function onHandleLogout() {
-    fetch("http://127.0.0.1:4000/logout", {
+    fetch("/logout", {
       method: "DELETE",
     }).then((r) => onLogout(null));
   }

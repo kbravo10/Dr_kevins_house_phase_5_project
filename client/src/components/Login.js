@@ -4,7 +4,7 @@ function Login({ onLogin }) {
   function handleSubmitLogin(event) {
     event.preventDefault();
     const loginForm = Object.fromEntries(new FormData(event.target).entries());
-    fetch("http://127.0.0.1:4000/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ function Login({ onLogin }) {
   function handleSubmitSignup(event){
     event.preventDefault()
     const signupform = Object.fromEntries(new FormData(event.target).entries());
-    fetch("http://127.0.0.1:4000/signup", {
+    fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
