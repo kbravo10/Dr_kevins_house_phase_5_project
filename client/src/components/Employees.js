@@ -7,7 +7,7 @@ function Employees() {
 
   //useeffect to only render once
   useEffect(() => {
-    fetch("https://phase-5-api-o5ni.onrender.com/employees")
+    fetch("http://127.0.0.1:4000/employees")
       .then((r) => r.json())
       .then((data) => setEmployees((employees) => (employees = data)));
   }, []);

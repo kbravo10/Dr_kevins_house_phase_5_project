@@ -7,7 +7,7 @@ function Medications() {
 
   //useeffect to only render once
   useEffect(() => {
-    fetch("https://phase-5-api-o5ni.onrender.com/medications")
+    fetch("http://127.0.0.1:4000/medications")
       .then((r) => r.json())
       .then((data) => setMedication((medications) => (medications = data)));
   }, []);
