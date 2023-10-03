@@ -18,27 +18,26 @@ function Login({ onLogin }) {
       }
     });
   }
-  function handleSubmitSignup(event){
-    event.preventDefault()
+  function handleSubmitSignup(event) {
+    event.preventDefault();
     const signupform = Object.fromEntries(new FormData(event.target).entries());
     fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body:JSON.stringify({
-        "name":signupform.name,
-        "username":signupform.username,
-        "password":signupform.password
+      body: JSON.stringify({
+        name: signupform.name,
+        username: signupform.username,
+        password: signupform.password,
       }),
     })
-    .then( r => r.json())
-    .then(data => console.log(data))
-
+      .then((r) => r.json())
+      .then((data) => onLogin(data));
   }
   return (
-    <div class = 'text-center'>
-      <form className='loginForm' onSubmit={handleSubmitLogin}>
+    <div class="text-center">
+      <form className="loginForm" onSubmit={handleSubmitLogin}>
         <div class="form-outline mb-4" className="username">
           <label class="form-label">UserName:</label>
           <input type="text" name="username"></input>
@@ -49,10 +48,10 @@ function Login({ onLogin }) {
         </div>
         <div className="submit">
           <button type="submit">Login</button>
-          
         </div>
       </form>
-      <br></br><br></br>
+      <br></br>
+      <br></br>
       <form className="signupForm" onSubmit={handleSubmitSignup}>
         <label>New employee?</label>
         <div>
@@ -67,7 +66,7 @@ function Login({ onLogin }) {
           <label>Enter new password:</label>
           <input type="password" name="password"></input>
         </div>
-          <button type="submit">Make Account</button>
+        <button type="submit">Make Account</button>
       </form>
     </div>
   );

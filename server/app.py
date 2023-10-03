@@ -31,12 +31,7 @@ class Signup(Resource):
             "id": new_employee.id,
         }
           
-        response = make_response(
-            user_dict,
-            201,
-            {"Content-Type" : "application/json"}
-        )
-        return new_employee.to_dict(), 201
+        return user_dict, 201
    
     
 #check if user logged in
