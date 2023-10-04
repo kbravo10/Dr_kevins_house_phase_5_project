@@ -6,6 +6,8 @@ function Medication_times({ userInfo }) {
   //declare usestate to hold med times from backend project
   const [med_times, setMed_times] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [addButton, setAddButton] = useState(false)
+  const [revoveButton, setRemoveButton] = useState(false)
 
   //use fetch to quire data
   //useeffect to only render once
@@ -56,16 +58,14 @@ function Medication_times({ userInfo }) {
     },
   });
 
-  // handle the user wanting to remove a time slot
-  function onHandleDeleteSlot() {}
-
   return (
     <div className="text-center">
       <h1>Medication Schedule</h1>
       <div>
-        <button >ADD TIME SLOT</button>
-        <button >REMOVE TIME SLOT</button>
+        <button onClick={() => setAddButton(!addButton)}>ADD TIME SLOT</button>
+        <button>REMOVE TIME SLOT</button>
       </div>
+      {addButton?
       <form onSubmit={formik.handleSubmit}>
         <br></br>
         <label htmlFor="timeSlot">time slot</label>
@@ -113,6 +113,8 @@ function Medication_times({ userInfo }) {
         />
         <button type="submit">Submit</button>
       </form>
+      : null
+}
       <table className="container">
         <thead className="text-start">
           <tr>
