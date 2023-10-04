@@ -5,6 +5,7 @@ function ClientInfo({ clientInfo }) {
     <div className="cardInfo">
       <h2>Name: {clientInfo.name}</h2>
       <h2>Age: {clientInfo.age}</h2>
+      <h2>Doctor: {clientInfo.doctor.name}</h2>
     </div>
   );
 }

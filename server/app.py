@@ -14,8 +14,6 @@ from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 class Signup(Resource):
     def post(self):
         json = request.get_json()
-        
-        print(json)
         new_employee = Employee(
             name = json['name'],
             username = json['username']
@@ -30,7 +28,6 @@ class Signup(Resource):
             "username": new_employee.username,
             "id": new_employee.id,
         }
-          
         return user_dict, 201
    
     
@@ -38,7 +35,6 @@ class Signup(Resource):
 class CheckSession(Resource):
     def get(self):
         user = Employee.query.filter(Employee.id == session.get("user_id")).first()
-        print(session.get("user_id"))
         if user:
             user_info = {
                 'username': user.username,
@@ -55,14 +51,12 @@ class Login(Resource):
         user = request.get_json()
         user_info = Employee.query.filter(Employee.username == user['username']).first()
         if user_info:
-            print(user)
             if user_info.authenticate(user['password']) == True:
                 user_dict = {
                     'name': user_info.name,
                     'id': user_info.id,
                 }
                 session["user_id"] = user_info.id
-               
                 return user_dict, 200
             else:
                 return {"errors":"Unathorized"}, 401
@@ -74,7 +68,6 @@ class Login(Resource):
 #logout route
 class Logout(Resource):
     def delete(self):
-        print(session.get('user_id'))
         if session.get('user_id'):
             session['user_id'] = None
             return{}, 204
@@ -91,31 +84,43 @@ def inventory():
 #medication schedule route
 class MedicationTimes(Resource):
     def get(self):
-        print(session)
         med_times = Med_times.query.order_by(Med_times.time_slot).all()
         med_times_dict = [mt.to_dict() for mt in med_times]
         return med_times_dict, 200
     def post(self):
-        pass
+        json = request.get_json()
+        try:
+            print(type(json['time_slot']))
+            time = ""
+            if int(json['time_slot']) < 10:
+                time = '0' + json['time_slot'] + ':00'
+            else:
+                time = json['time_slot'] + ':00'
+            new_time_slot = Med_times(
+                time_slot = time,
+                amount = 'NA',
+                signed_off = '------Not Signed Off------',
+                client_id = json['signed_off'],
+                medication_id = json['medication_id']
+            )
+            db.session.add(new_time_slot)
+            db.session.commit()
+        except Exception:
+            print('no good')
+        return {}, 200
+
 
 class MedicationTimesId(Resource):
     def get(self, id):
-        # med_time_jason=request.get_json()
-        print(session[user])
         med_time=Med_times.query.filter(Med_times.id == id).first()
         med_time_dict = med_time.to_dict()
-        print(med_time_dict)
         return med_time_dict, 200 
     def patch(self, id):
-        print(id)
         record = Med_times.query.filter(Med_times.id == id).first()
-        print(request.get_json()['signed_off'])
         record.signed_off = request.get_json()['signed_off']
         request_dict = record.to_dict()
         db.session.add(record)
         db.session.commit()
-        
-        # print(record.signed_off)
         return request_dict, 200
 
 @app.route('/clients')
