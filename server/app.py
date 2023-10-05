@@ -150,6 +150,17 @@ def clients():
     clients = Client.query.all()
     client_dict = [c.to_dict() for c in clients]    
     return client_dict,200
+    
+class ClientID(Resource):
+    def get(self, id):
+        client = Client.query.filter(Client.id == id).first()
+        client_dict = {
+            'id': client.id,
+            'name': client.name,
+            'age': client.age,
+            'doctor': client.doctor.name
+        }
+        return client_dict, 200 
 
 @app.route('/doctors')
 def doctors():
@@ -175,8 +186,15 @@ def employees():
 class Reports(Resource):
     def get(self):
         report = Report.query.all()
-        report_dict = [rep.to_dict() for rep in report]
-        return report_dict, 200
+        reports = []
+        for r in report:
+            report_dict = {
+                'id': r.id,
+                'type_of_report': r.type_of_report,
+                'client_name': r.client_name
+            }
+            reports.append(report_dict)
+        return reports, 200
     def post(self):
         json = request.get_json()
         print(json)
@@ -195,15 +213,22 @@ class Reports(Resource):
         except Exception:
             print('not good')
             return {'errors': 'Unprcessible '}
+class ReportId(Resource):
+    def get(self, id):
+        report = Report.query.filter(Report.id == id).first()
+        return report.to_dict(), 200
 
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(CheckSession, '/check_session')
+api.add_resource(ClientID, '/clients/<int:id>', endpoint = 'clients/id')
 api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_times')
 api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Reports, '/reports', endpoint='reports')
-api.add_resource(InventoryId, '/reports/<int:id>', endpoint='reports/<int:id>')
+api.add_resource(InventoryId, '/inventory/<int:id>', endpoint='inventory/<int:id>')
+api.add_resource(ReportId, '/reports/<int:id>', endpoint='reports/<int:id>')
+
 
 
 

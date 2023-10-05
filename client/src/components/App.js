@@ -9,6 +9,8 @@ import Doctors from "./Doctors";
 import Employees from "./Employees";
 import Report from "./Report";
 import Login from "./Login";
+import ReportInfo from "./ReportInfo";
+import ClientInfo from "./ClientInfo";
 
 function App() {
   //set a is logged in state to check if im logged in and display correct page
@@ -45,6 +47,9 @@ function App() {
         <Route exact path="/clients">
           <Clients />
         </Route>
+        <Route exact path={`/clients/:id`}>
+          <ClientInfo />
+        </Route>
         <Route exact path="/medications">
           <Medications />
         </Route>
@@ -56,6 +61,9 @@ function App() {
         </Route>
         <Route exact path="/reports">
           <Report />
+        </Route>
+        <Route exact path={`/reports/:id`}>
+          <ReportInfo />
         </Route>
       </Switch>
     </div>

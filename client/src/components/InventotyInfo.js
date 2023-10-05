@@ -11,7 +11,7 @@ function InventoryInfo({ inv }) {
       action = "restock";
     }
 
-    fetch(`/reports/${inv.id}`, {
+    fetch(`/inventory/${inv.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

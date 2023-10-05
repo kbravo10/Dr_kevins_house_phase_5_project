@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReportInfo from "./ReportInfo";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Report() {
   // usestate to get the fetch
@@ -54,7 +54,13 @@ function Report() {
       <button onClick={() => setVisible(true)}>View reports</button>
       {visible
         ? reports.map((report, index) => {
-            return <ReportInfo key={index} report={report} />;
+            return (
+              <div key={index}>
+                <Link className='link' to={`/reports/${report.id}`}>
+                  {report.type_of_report}- {report.client_name}
+                </Link>
+              </div>
+            );
           })
         : null}
 

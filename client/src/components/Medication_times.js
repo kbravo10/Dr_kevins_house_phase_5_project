@@ -18,7 +18,7 @@ function Medication_times({ userInfo }) {
   }, [refresh]);
 
   const formSchema = yup.object().shape({
-    time_slot: yup.number("Must be a number").integer().positive().max(20),
+    time_slot: yup.number().integer(),
     amount: yup.string(),
     client_id: yup
       .number()
@@ -50,22 +50,23 @@ function Medication_times({ userInfo }) {
         body: JSON.stringify(values, null, 2),
       }).then((r) => {
         if (r.status == 201) {
-          setRefresh((refresh) => (refresh = true));
+          setRefresh(true);
         }
       });
     },
   });
 
   function handleDeleteTime(event) {
-    event.preventDefault()
+    event.preventDefault();
     const deleteTime = Object.fromEntries(new FormData(event.target).entries());
     fetch(`/medication_times/${deleteTime.timeSlotId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((r) => r.json())
-    .then((data) => setRefresh(true))
+    })
+      .then((r) => r.json())
+      .then((data) => setRefresh(true));
   }
 
   return (
@@ -81,14 +82,21 @@ function Medication_times({ userInfo }) {
         <div className="addTimeDiv">
           <form className="addMedTimeButton" onSubmit={formik.handleSubmit}>
             <br></br>
-            <label htmlFor="timeSlot">time slot</label>
-            <input
+            <label htmlFor="time_slot">time slot</label>
+            <select
               id="time_slot"
               name="time_slot"
               onChange={formik.handleChange}
-              value={formik.values.time_slot}
-            />
-            <label>:00</label>
+            >
+              {[...Array(24).keys()].map((time, index) => {
+                return (
+                  <option key={index} value={time}>
+                    {time}:00
+                  </option>
+                );
+              })}
+            </select>
+
             <p style={{ color: "red" }}> {formik.errors.time_slot}</p>
             <br></br>
             <label htmlFor="amount">enter amount</label>
@@ -127,7 +135,7 @@ function Medication_times({ userInfo }) {
               <select name="timeSlotId">
                 {med_times.map((mt, index) => {
                   return (
-                    <option value={mt.id}>
+                    <option key={index} value={mt.id}>
                       Time: {mt.time_slot} Client: {mt.clients.name}
                     </option>
                   );

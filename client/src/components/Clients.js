@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ClientInfo from "./ClientInfo";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Clients() {
   //declare usestate to get data from backend
@@ -18,7 +19,9 @@ function Clients() {
       {clients.map((client, index) => {
         return (
           <div key={index} className="clientDisplay">
-            <ClientInfo key={index} clientInfo={client} />
+            <Link className='link' to={`/clients/${client.id}`}>
+              ID:{client.id} - {client.name} 
+            </Link>
           </div>
         );
       })}
