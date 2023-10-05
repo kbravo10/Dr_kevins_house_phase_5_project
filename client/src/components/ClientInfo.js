@@ -14,7 +14,7 @@ function ClientInfo({ clientInfo }) {
     <div className="cardInfo">
       <h2>Name: {client.name}</h2>
       <h2>Age: {client.age}</h2>
-      <h2>doctors: {client.doctor}</h2>
+      <h2>Doctor: {client.doctor} email: {client.doctor_email}</h2>
     </div>
   );
 }

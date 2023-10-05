@@ -158,7 +158,8 @@ class ClientID(Resource):
             'id': client.id,
             'name': client.name,
             'age': client.age,
-            'doctor': client.doctor.name
+            'doctor': client.doctor.name,
+            'doctor_email' : client.doctor.email 
         }
         return client_dict, 200 
 
@@ -169,6 +170,11 @@ def doctors():
     doctor_dict = [doc.to_dict() for doc in doctors]
     # print(doctor_dict)
     return doctor_dict,200
+
+class DoctorId(Resource):
+    def get(self, id):
+        doctor = Doctor.query.filter(Doctor.id == id).filter()
+        return doctor.to_dict(), 200
 
 @app.route('/medications')
 def medications():
@@ -228,6 +234,7 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Reports, '/reports', endpoint='reports')
 api.add_resource(InventoryId, '/inventory/<int:id>', endpoint='inventory/<int:id>')
 api.add_resource(ReportId, '/reports/<int:id>', endpoint='reports/<int:id>')
+api.add_resource(DoctorId, '/doctors/<int:id>', endpoint = 'doctors/<int:id>')
 
 
 
