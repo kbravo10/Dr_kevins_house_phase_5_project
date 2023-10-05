@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InventoryInfo from "./InventotyInfo";
 
 function Inventory() {
   //declare usestate to hold intructions information from backend project
@@ -28,7 +29,10 @@ function Inventory() {
             <tbody key={index}>
               <tr class="text-start">
                 <td>{inv.inventory}</td>
-                <td>{inv.count_inventory}</td>
+                <td>
+                  {inv.count_inventory + 100} 
+                  <button>decrease by 1</button>
+                </td>
                 <td>{inv.instructions}</td>
               </tr>
             </tbody>
