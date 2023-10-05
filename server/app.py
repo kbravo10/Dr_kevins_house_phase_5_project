@@ -89,7 +89,9 @@ class MedicationTimes(Resource):
         return med_times_dict, 200
     def post(self):
         json = request.get_json()
+        print(json)
         try:
+            print('im in')
             print(type(json['time_slot']))
             time = ""
             if int(json['time_slot']) < 10:
@@ -100,15 +102,16 @@ class MedicationTimes(Resource):
                 time_slot = time,
                 amount = 'NA',
                 signed_off = '------Not Signed Off------',
-                client_id = json['signed_off'],
+                client_id = json['client_id'],
                 medication_id = json['medication_id']
             )
             db.session.add(new_time_slot)
             db.session.commit()
+            print('im commited')
+            return {},201
         except Exception:
             print('no good')
         return {}, 200
-
 
 class MedicationTimesId(Resource):
     def get(self, id):
@@ -122,6 +125,11 @@ class MedicationTimesId(Resource):
         db.session.add(record)
         db.session.commit()
         return request_dict, 200
+    def delete(self, id):
+        record = Med_times.query.filter(Med_times.id == id).first()
+        db.session.delete(record)
+        db.session.commit()
+        return {'message': 'DELETE SUCCESSFUL'}, 200
 
 @app.route('/clients')
 def clients():
@@ -151,11 +159,29 @@ def employees():
     employee_dict = [employee.to_dict() for employee in employees]
     return employee_dict, 200
 
-@app.route('/reports')
-def report():
-    report = Report.query.all()
-    report_dict = [rep.to_dict() for rep in report]
-    return report_dict, 200
+class Reports(Resource):
+    def get(self):
+        report = Report.query.all()
+        report_dict = [rep.to_dict() for rep in report]
+        return report_dict, 200
+    def post(self):
+        json = request.get_json()
+        print(json)
+        try: 
+            client_name = Client.query.filter(Client.id == json['client_id']).first()
+            print(client_name.id)
+            new_report = Report(
+                type_of_report= json['type_of_report'],
+                context= json['context'],
+                client_name= client_name.name,
+                employee_id= session.get('user_id')
+            )
+            db.session.add(new_report)
+            db.session.commit()
+            return {'message': 'object created'}, 201
+        except Exception:
+            print('not good')
+            return {'errors': 'Unprcessible '}
 
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(CheckSession, '/check_session')
@@ -163,6 +189,7 @@ api.add_resource(MedicationTimes, '/medication_times', endpoint='medication_time
 api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medication_times/<int:id>')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Reports, '/reports', endpoint='reports')
 
 
 

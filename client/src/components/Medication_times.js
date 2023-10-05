@@ -20,7 +20,6 @@ function Medication_times({ userInfo }) {
   const formSchema = yup.object().shape({
     time_slot: yup.number("Must be a number").integer().positive().max(20),
     amount: yup.string(),
-    signed_off: yup.string(),
     client_id: yup
       .number()
       .integer()
@@ -38,7 +37,6 @@ function Medication_times({ userInfo }) {
     initialValues: {
       time_slot: "",
       amount: "",
-      signed_off: "",
       client_id: "",
       medication_id: "",
     },
@@ -49,9 +47,9 @@ function Medication_times({ userInfo }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values, null),
+        body: JSON.stringify(values, null, 2),
       }).then((r) => {
-        if (r.status == 200) {
+        if (r.status == 201) {
           setRefresh((refresh) => (refresh = true));
         }
       });
@@ -59,15 +57,15 @@ function Medication_times({ userInfo }) {
   });
 
   function handleDeleteTime(event) {
-    event.preventDefault();
+    event.preventDefault()
     const deleteTime = Object.fromEntries(new FormData(event.target).entries());
     fetch(`/medication_times/${deleteTime.timeSlotId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((r) => r.json());
-    console.log(deleteTime.timeSlotId);
+    }).then((r) => r.json())
+    .then((data) => setRefresh(true))
   }
 
   return (
@@ -90,6 +88,7 @@ function Medication_times({ userInfo }) {
               onChange={formik.handleChange}
               value={formik.values.time_slot}
             />
+            <label>:00</label>
             <p style={{ color: "red" }}> {formik.errors.time_slot}</p>
             <br></br>
             <label htmlFor="amount">enter amount</label>
@@ -99,16 +98,6 @@ function Medication_times({ userInfo }) {
               onChange={formik.handleChange}
               value={formik.values.amount}
             />
-
-            <br></br>
-            <label htmlFor="signed_off">enter your id or NA</label>
-            <input
-              id="signed_off"
-              name="signed_off"
-              onChange={formik.handleChange}
-              value={formik.values.signed_off}
-            />
-
             <br></br>
             <label htmlFor="signed_off">Enter the clients id</label>
             <input
