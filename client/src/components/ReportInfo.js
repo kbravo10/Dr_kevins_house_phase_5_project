@@ -6,6 +6,7 @@ function ReportInfo({ report }) {
       <a>
         {report.type_of_report}- {report.client_name}
       </a>
+      <a>{report.context}</a>
     </div>
   );
 }
