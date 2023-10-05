@@ -26,16 +26,7 @@ function Inventory() {
         </thead>
         {inventory.map((inv, index) => {
           return (
-            <tbody key={index}>
-              <tr class="text-start">
-                <td>{inv.inventory}</td>
-                <td>
-                  {inv.count_inventory + 100} 
-                  <button>decrease by 1</button>
-                </td>
-                <td>{inv.instructions}</td>
-              </tr>
-            </tbody>
+            <InventoryInfo key={index} inv={inv} />
           );
         })}
       </table>

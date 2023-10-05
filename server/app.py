@@ -81,6 +81,19 @@ def inventory():
     inventory_dict = [inv.to_dict() for inv in inventory]
     return inventory_dict, 200
 
+class InventoryId(Resource):
+    def patch(self, id):
+        json = request.get_json()
+        record = Inventory.query.filter(Inventory.id == id).first()
+        if json['action'] == 'decrease':
+            record.count_inventory = record.count_inventory - 1
+        else:
+            record.count_inventory = 10
+        db.session.add(record)
+        db.session.commit()
+        return {},204
+
+
 #medication schedule route
 class MedicationTimes(Resource):
     def get(self):
@@ -190,6 +203,7 @@ api.add_resource(MedicationTimesId, '/medication_times/<int:id>', endpoint='medi
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Reports, '/reports', endpoint='reports')
+api.add_resource(InventoryId, '/reports/<int:id>', endpoint='reports/<int:id>')
 
 
 
