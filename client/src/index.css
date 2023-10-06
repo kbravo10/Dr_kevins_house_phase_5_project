@@ -21,13 +21,46 @@ body {
 
 .cardInfo{
   display: inline-block;
-  border: white;
-  background-color: #1d3b58;
-  color: white;
+  border: 10px solid black;
+  color: black;
   margin-top: 10px;
   text-align: center;
 }
 
+.descriptionDiv{
+  display: flex;
+}
+.descriptionCard{
+  border: 10px solid black;
+  width: auto;
+  height: 125px;
+  margin-left: 10px;
+  margin-right: auto;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.cardImage{
+  display: flex;
+  border: 10px solid black;
+  width: 300px;
+  height: 300px;
+  margin-left: 50px;
+  margin-right: 10px;
+  margin-top: 10px;
+  object-fit: scale-down;
+}
+
+.medicalContactDiv{
+  border: 10px solid black;
+  display: inline-block;
+  width: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  
+}
+
 tr{
-  border: black
+  border: 30px solid black
 }

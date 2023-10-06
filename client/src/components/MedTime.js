@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function MedTime({ mt, userInfo }) {
   //handle employee signing off time slot
   const [signedOff, setSignrdOff] = useState(mt.signed_off);
+  const [color, setColor] = useState('')
   function onHandleSignOff() {
     console.log(userInfo);
     setSignrdOff((signedOff) => (signedOff = userInfo.name));
@@ -15,15 +16,17 @@ function MedTime({ mt, userInfo }) {
       body: JSON.stringify({
         signed_off: userInfo.name,
       }),
-    }).then((res) => res.json());
+    }).then((res) => res.json())
+    .then((setColor((color) => (color = 'green'))))
   }
+
   return (
     <>
       <tbody>
         <tr className="text-start">
           <td>{mt.time_slot}</td>
           <td>
-            <button onClick={onHandleSignOff}>{signedOff}</button>
+            <button style={{backgroundColor: color}} onClick={onHandleSignOff}>{signedOff}</button>
           </td>
           <td>
             {mt.client_id}. {mt.clients.name}
