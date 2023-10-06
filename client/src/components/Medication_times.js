@@ -69,15 +69,32 @@ function Medication_times({ userInfo }) {
       .then((data) => setRefresh(true));
   }
 
+  function handleAddButtn(e){
+    e.preventDefault()
+    setAddButton(true)
+    if(removeButton == true){
+      setRemoveButton(false)
+    }
+  }
+
+  function handleDeleteButtn(e){
+    e.preventDefault()
+    setRemoveButton(true)
+    if(addButton == true){
+      setAddButton(false)
+    }
+  }
+
   return (
     <div className="text-center">
       <h1>Medication Schedule</h1>
-      <div>
-        <button onClick={() => setAddButton(!addButton)}>ADD TIME SLOT</button>
-        <button onClick={() => setRemoveButton(!removeButton)}>
+      <div className="actionButtonDiv">
+        <button onClick={handleAddButtn}>ADD TIME SLOT</button>
+        <button onClick={handleDeleteButtn}>
           REMOVE TIME SLOT
         </button>
       </div>
+      <br></br>
       {addButton ? (
         <div className="addTimeDiv">
           <form className="addMedTimeButton" onSubmit={formik.handleSubmit}>

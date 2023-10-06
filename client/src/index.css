@@ -18,6 +18,9 @@ body {
   background-color: #1d3b58;
   color: white;
 }
+button.navlink{
+  text-decoration: underline;
+}
 
 .cardInfo{
   display: inline-block;
@@ -67,10 +70,39 @@ body {
   text-align: center;
   width:90vw;
 }
-.contextDiv{
-
-}
-
 tr{
   border: 30px solid black
+}
+
+.addTimeDiv{
+  display: inline-block;
+  border: 3px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: auto;
+  padding: 10px;
+}
+
+.actionButtonDiv{
+  display: inline-block;
+  width: auto;
+  height: 40px;
+}
+
+.removeTimeDiv{
+  display: inline-block;
+  border: 3px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: auto;
+  padding: 10px;
+}
+
+.contentDiv{
+  border: 3px solid black;
+  margin-right: 200px;
+  margin-left: 200px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: fit-contentu;
 }
