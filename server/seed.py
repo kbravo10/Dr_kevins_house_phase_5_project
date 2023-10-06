@@ -66,13 +66,14 @@ if __name__ == '__main__':
         for i in range(len(inventory_list)):
             inventory = Inventory(
                 inventory = inventory_list[i],
-                count_inventory = randint(0,10),
+                count_inventory = randint(1, 10),
                 instructions = 'Consult doctor'
             )
+            db.session.add(inventory)
             inventory_all.append(inventory)
-        db.session.add_all(inventory_all)
+        # db.session.add_all(inventory_all)
 
-        
+         
 
         #doctors object
         doctors_all = []
@@ -147,7 +148,7 @@ if __name__ == '__main__':
             emp = rc(employees)
             report = Report(
                 type_of_report = rc(report_types),
-                context = fake.sentence(),
+                context = fake.paragraph(),
                 )
             report.employee = emp
             report.client = rc(client_all)

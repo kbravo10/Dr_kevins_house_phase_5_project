@@ -13,22 +13,25 @@ from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
 class Signup(Resource):
     def post(self):
-        json = request.get_json()
-        new_employee = Employee(
-            name = json['name'],
-            username = json['username']
-        )
-        new_employee.password_hash = json['password']
+        try:
+            json = request.get_json()
+            new_employee = Employee(
+                name = json['name'],
+                username = json['username']
+            )
+            new_employee.password_hash = json['password']
 
-        db.session.add(new_employee)
-        db.session.commit()
-        session['user_id'] = new_employee.id
-        user_dict = {
-            "name": new_employee.name,
-            "username": new_employee.username,
-            "id": new_employee.id,
-        }
-        return user_dict, 201
+            db.session.add(new_employee)
+            db.session.commit()
+            session['user_id'] = new_employee.id
+            user_dict = {
+                "name": new_employee.name,
+                "username": new_employee.username,
+                "id": new_employee.id,
+            }
+            return user_dict, 201
+        except Exception:
+            return {'errors': 'Invalid Information'}
    
     
 #check if user logged in
@@ -154,12 +157,14 @@ def clients():
 class ClientID(Resource):
     def get(self, id):
         client = Client.query.filter(Client.id == id).first()
+
         client_dict = {
             'id': client.id,
             'name': client.name,
             'age': client.age,
             'doctor': client.doctor.name,
-            'doctor_email' : client.doctor.email 
+            'doctor_email': client.doctor.email,
+            'doctor_id': client.doctor_id,
         }
         return client_dict, 200 
 

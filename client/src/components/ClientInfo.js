@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-function ClientInfo({ clientInfo }) {
+function ClientInfo() {
   const [client, setClient] = useState([])
   const params = useParams()
 

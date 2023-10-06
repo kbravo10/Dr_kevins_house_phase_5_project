@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
+import re
 
 
 
@@ -19,6 +20,16 @@ class Doctor(db.Model, SerializerMixin):
     email = db.Column(db.String, nullable=False)
 
     clients = db.relationship('Client', backref = 'doctor')
+
+    @validates('name')
+    def validates_name(self, key, doctors):
+        if len(doctors) != 0:
+            return doctors
+    
+    @validates('email')
+    def validates_email(self, key, doctors):
+         if re.match(r"[^@]+@[^@]+\.[^@]+", doctors):
+            return doctors
 
     def __repr__(self):
         return f'doctor: {self.name}, email: {self.email}, \nclients: {self.clients}'
@@ -38,6 +49,16 @@ class Client(db.Model, SerializerMixin):
     medications = db.relationship('Med_times', back_populates = 'clients')
     reports = db.relationship('Report', backref = 'client')
 
+    @validates('name')
+    def validates_name(self, key, clients):
+        if len(clients) != 0:
+            return clients
+
+    @validates('age')
+    def validates_age(self, key, clients):
+        if 0 < clients < 120:
+            return clients
+
     def __repr__(self):
         return f'name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
 
@@ -53,6 +74,17 @@ class Medication(db.Model, SerializerMixin):
     medication_use = db.Column(db.String, nullable=False)
 
     clients = db.relationship('Med_times', back_populates='medications')
+
+    @validates('name')
+    def validate_name(self, key, medications):
+        if len(medications) != 0:
+            return medications
+    
+    @validates('medication_use')
+    def validates_med_use(self, key, medications):
+        if len(medications) > 8:
+            return medications
+
 
     def __repr__(self):
         return f'name: {self.name}, usage: {self.medication_use}, clients: {self.clients}'
@@ -86,6 +118,25 @@ class Inventory(db.Model, SerializerMixin):
     count_inventory = db.Column(db.Integer)
     instructions = db.Column(db.String)
 
+    @validates('inventory')
+    def validate_inventory(self, key, inventories):
+        if len(inventories) != 0:
+            return inventories
+
+    @validates('count_inventory')
+    def validate_inv_count(self, key, inventories):
+        if 0 <= inventories:
+            return inventories
+        else:
+            return ValueError('number must be positive')
+    
+    @validates('instructions')
+    def validate_instructions(self, key, inventories):
+        if 10 < len(inventories) and inventories != None:
+            return inventories
+        else:
+            return ValueError('Null or length to short')
+
 #create a class Reports
 class Report(db.Model, SerializerMixin):
     __tablename__ = 'reports'
@@ -97,6 +148,17 @@ class Report(db.Model, SerializerMixin):
 
     employee_id = db.Column(db.Integer, db.ForeignKey('employees.id'))
     client_name = db.Column(db.String, db.ForeignKey('clients.name'))
+
+    @validates('type_of_report')
+    def validate_type(self, key, reports):
+        if len(reports) != 0:
+            return reports
+    
+    @validates('context')
+    def validate_context(self, key, reports):
+        if len(reports) > 25:
+            return reports
+
 
 
 #create a class employee
@@ -111,6 +173,17 @@ class Employee(db.Model, SerializerMixin):
 
     med_times = db.relationship('Med_times', backref = 'employee')
     reports = db.relationship('Report', backref = 'employee')
+
+
+    @validates('name')
+    def validates_name(self, key, employees):
+        if len(employees) != 0:
+            return employees
+
+    @validates('username')
+    def validates_email(self, key, employees):
+         if re.match(r"[^@]+@[^@]+\.[^@]+", employees):
+            return employees
 
     @hybrid_property
     def password_hash(self):
