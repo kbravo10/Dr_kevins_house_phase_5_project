@@ -56,52 +56,56 @@ function Report() {
         ? reports.map((report, index) => {
             return (
               <div key={index}>
-                <Link className='link' to={`/reports/${report.id}`}>
+                <Link className="link" to={`/reports/${report.id}`}>
                   {report.type_of_report}- {report.client_name}
                 </Link>
               </div>
             );
           })
         : null}
-
-      <h2>Make report</h2>
-      <form className="reportForm" onSubmit={formik.handleSubmit}>
-        <div className="reportTypeDiv">
-          <label htmlFor="type_of_report">Type of Report</label>
-          <br></br>
-          <select
-            id="type_of_report"
-            name="type_of_report"
-            onChange={formik.handleChange}
-          >
-            <option value="none">none</option>
-            <option value="small injury">Small Injury</option>
-            <option value="Emergency">Emergency</option>
-            <option value="End of shift">End of Shift</option>
-          </select>
-        </div>
-        <div className="clientReport">
-          <label htmlFor="client_id">
-            Client involved- if no client involved leave blank
-          </label>
-          <input
-            id="client_id"
-            name="client_id"
-            onChange={formik.handleChange}
-            value={formik.values.client_id}
-          />
-        </div>
-        <div className="contextDiv">
-          <label htmlFor="context">Report Summary</label>
-          <input
-            id="context"
-            name="context"
-            onChange={formik.handleChange}
-            value={formik.values.context}
-          />
-        </div>
-        <button type="submit">Submit Report</button>
-      </form>
+      <br></br>
+      <div className="reportDiv">
+        <h2>Make report</h2>
+        <form className="reportForm" onSubmit={formik.handleSubmit}>
+          <div className="reportTypeDiv">
+            <label htmlFor="type_of_report">Type of Report</label>
+            <br></br>
+            <select
+              id="type_of_report"
+              name="type_of_report"
+              onChange={formik.handleChange}
+            >
+              <option value="none">none</option>
+              <option value="small injury">Small Injury</option>
+              <option value="Emergency">Emergency</option>
+              <option value="End of shift">End of Shift</option>
+            </select>
+          </div>
+          <div className="clientReport">
+            <label htmlFor="client_id">
+              Client involved- if no client involved leave blank
+            </label>
+            <input
+              id="client_id"
+              name="client_id"
+              onChange={formik.handleChange}
+              value={formik.values.client_id}
+            />
+          </div>
+          <div className="contextDiv">
+            <label htmlFor="context">Report Summary</label>
+            <br></br>
+            <input
+              style={{width:'60vw', height: '20vw', textAlignVertical: 'top'}}
+              id="context"
+              name="context"
+              onChange={formik.handleChange}
+              value={formik.values.context}
+            />
+          </div>
+          <button type="submit">Submit Report</button>
+        </form>
+      </div>
     </div>
   );
 }
