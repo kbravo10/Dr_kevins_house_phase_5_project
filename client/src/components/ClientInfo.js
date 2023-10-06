@@ -20,12 +20,18 @@ function ClientInfo() {
         <img
           className="cardImage"
           alt="oops"
-          src="https://nonsa.pl/images/thumb/1/11/Ash_ketchum.jpg/1200px-Ash_ketchum.jpg"
+          src={client.image}
         />
       </div>
+      <br></br>
+      <div className="bioDiv">
+        <h3>Summary/bio: </h3>
+        <p>{client.bio}</p>
+      </div>
+      <br></br>
       <div className="medicalContactDiv">
         <h3>Doctor: {client.doctor}</h3>
-        <h3>email: {client.doctor_email}</h3>
+        <h3>phone #: {client.doctor_phone}</h3>
       </div>
     </div>
   );

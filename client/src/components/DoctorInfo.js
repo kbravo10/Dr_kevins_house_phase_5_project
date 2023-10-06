@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 function DoctorInfo({ docInfo }) {
   return (
     <div className="cardInfo">
-      <h2>Name: {docInfo.name}</h2>
-      <h2>E-mail: {docInfo.email}</h2>
-      <h2>Clients: </h2>
+      <h2>{docInfo.name}</h2>
+      <h3>E-mail: {docInfo.email}</h3>
+      <h3>Phone #: {docInfo.number}</h3>
+      <h3>Clients: </h3>
+      
       {docInfo.clients.map((client, index) => {
         return (
           <li key={index} className="listRelationship">

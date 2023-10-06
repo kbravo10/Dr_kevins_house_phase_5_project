@@ -18,6 +18,7 @@ class Doctor(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
+    number = db.Column(db.String)
 
     clients = db.relationship('Client', backref = 'doctor')
 
@@ -44,6 +45,8 @@ class Client(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, nullable=False)
+    image = db.Column(db.String)
+    bio = db.Column(db.String)
 
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
     medications = db.relationship('Med_times', back_populates = 'clients')
@@ -66,8 +69,6 @@ class Client(db.Model, SerializerMixin):
 class Medication(db.Model, SerializerMixin):
     __tablename__ = 'medications'
     serialize_rules =['-clients.medications',]
-
-
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String, unique = True, nullable= False)
@@ -95,8 +96,6 @@ class Med_times(db.Model, SerializerMixin):
     __tablename__ = 'med_times'
     serialize_rules =['-employee.med_times', '-clients.med_times', 
                       '-medications.med_times', '-clients.medications', '-medications.clients']
-
-
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     time_slot = db.Column(db.String, nullable=False)
@@ -170,6 +169,7 @@ class Employee(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable = False)
     username = db.Column(db.String, unique=True, nullable = False)
     _password_hash = db.Column(db.String, nullable=False)
+    admin = db.Column(db.Integer)
 
     med_times = db.relationship('Med_times', backref = 'employee')
     reports = db.relationship('Report', backref = 'employee')

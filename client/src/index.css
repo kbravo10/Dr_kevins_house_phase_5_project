@@ -106,3 +106,12 @@ tr{
   margin-bottom: 10px;
   height: fit-contentu;
 }
+
+.bioDiv{
+  display: inline-block;
+  border: 10px solid black;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 60vw;
+  height: auto;
+}

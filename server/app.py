@@ -162,8 +162,10 @@ class ClientID(Resource):
             'id': client.id,
             'name': client.name,
             'age': client.age,
+            'image': client.image,
+            'bio' : client.bio,
             'doctor': client.doctor.name,
-            'doctor_email': client.doctor.email,
+            'doctor_phone': client.doctor.number,
             'doctor_id': client.doctor_id,
         }
         return client_dict, 200 
@@ -190,9 +192,16 @@ def medications():
 
 @app.route('/employees')
 def employees():
-    employees = Employee.query.all()
-    employee_dict = [employee.to_dict() for employee in employees]
-    return employee_dict, 200
+    if session.get('user_id'):
+        user = Employee.query.filter(Employee.id == session['user_id']).first()
+        if user.admin == 1:
+            employees = Employee.query.all()
+            employee_dict = [employee.to_dict() for employee in employees]
+            return employee_dict, 200
+        else:
+            return {'errors': 'Access denied'}, 404
+    return {'errors': 'Access denied'}, 404
+
 
 class Reports(Resource):
     def get(self):
