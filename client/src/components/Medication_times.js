@@ -19,7 +19,7 @@ function Medication_times({ userInfo }) {
 
   const formSchema = yup.object().shape({
     time_slot: yup.number().integer(),
-    amount: yup.string(),
+    // amount: yup.string(),
     client_id: yup
       .number()
       .integer()
@@ -36,7 +36,7 @@ function Medication_times({ userInfo }) {
   const formik = useFormik({
     initialValues: {
       time_slot: "",
-      amount: "",
+      // amount: "",
       client_id: "",
       medication_id: "",
     },
@@ -69,19 +69,19 @@ function Medication_times({ userInfo }) {
       .then((data) => setRefresh(true));
   }
 
-  function handleAddButtn(e){
-    e.preventDefault()
-    setAddButton(true)
-    if(removeButton == true){
-      setRemoveButton(false)
+  function handleAddButtn(e) {
+    e.preventDefault();
+    setAddButton(true);
+    if (removeButton == true) {
+      setRemoveButton(false);
     }
   }
 
-  function handleDeleteButtn(e){
-    e.preventDefault()
-    setRemoveButton(true)
-    if(addButton == true){
-      setAddButton(false)
+  function handleDeleteButtn(e) {
+    e.preventDefault();
+    setRemoveButton(true);
+    if (addButton == true) {
+      setAddButton(false);
     }
   }
 
@@ -90,9 +90,7 @@ function Medication_times({ userInfo }) {
       <h1>Medication Schedule</h1>
       <div className="actionButtonDiv">
         <button onClick={handleAddButtn}>ADD TIME SLOT</button>
-        <button onClick={handleDeleteButtn}>
-          REMOVE TIME SLOT
-        </button>
+        <button onClick={handleDeleteButtn}>REMOVE TIME SLOT</button>
       </div>
       <br></br>
       {addButton ? (
@@ -113,17 +111,9 @@ function Medication_times({ userInfo }) {
                 );
               })}
             </select>
-
             <p style={{ color: "red" }}> {formik.errors.time_slot}</p>
             <br></br>
-            <label htmlFor="amount">enter amount</label>
-            <input
-              id="amount"
-              name="amount"
-              onChange={formik.handleChange}
-              value={formik.values.amount}
-            />
-            <br></br>
+
             <label htmlFor="signed_off">Enter the clients id</label>
             <input
               id="client_id"

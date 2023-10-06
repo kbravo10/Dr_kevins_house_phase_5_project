@@ -147,6 +147,8 @@ class Report(db.Model, SerializerMixin):
 
     employee_id = db.Column(db.Integer, db.ForeignKey('employees.id'))
     client_name = db.Column(db.String, db.ForeignKey('clients.name'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     @validates('type_of_report')
     def validate_type(self, key, reports):

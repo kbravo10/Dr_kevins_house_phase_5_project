@@ -102,7 +102,7 @@ class MedicationTimes(Resource):
     def get(self):
         med_times = Med_times.query.order_by(Med_times.time_slot).all()
         med_times_dict = [mt.to_dict() for mt in med_times]
-        return med_times_dict, 200
+        return med_times_dict , 200
     def post(self):
         json = request.get_json()
         print(json)
@@ -208,10 +208,12 @@ class Reports(Resource):
         report = Report.query.all()
         reports = []
         for r in report:
+            time_stamp = r.created_at
             report_dict = {
                 'id': r.id,
                 'type_of_report': r.type_of_report,
-                'client_name': r.client_name
+                'client_name': r.client_name,
+                'time_stamp': str(time_stamp),
             }
             reports.append(report_dict)
         return reports, 200

@@ -14,12 +14,16 @@ function ReportInfo() {
   return (
     <div className="reportDiv">
       <div className="reportHeaderDiv">
-        <span>
+        <h1>Report Tittle</h1>
+        <h3>
           {report.type_of_report}- {report.client_name}
-        </span>
+        </h3>
+        <br></br>
+        <h1>Report made at : </h1>
+        <h3>{report.created_at}</h3>
       </div>
       <div className="contentDiv">
-        <span>{report.context}</span>
+        <p>{report.context}</p>
       </div>
     </div>
   );

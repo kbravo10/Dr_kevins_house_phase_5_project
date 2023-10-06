@@ -57,7 +57,7 @@ function Report() {
             return (
               <div key={index}>
                 <Link className="link" to={`/reports/${report.id}`}>
-                  {report.type_of_report}- {report.client_name}
+                  {report.type_of_report} -- {report.client_name} -- {report.time_stamp}
                 </Link>
               </div>
             );
@@ -81,6 +81,7 @@ function Report() {
               <option value="End of shift">End of Shift</option>
             </select>
           </div>
+          <p style={{ color: "red" }}> {formik.errors.type_of_report}</p>
           <div className="clientReport">
             <label htmlFor="client_id">
               Client involved- if no client involved leave blank
@@ -92,6 +93,7 @@ function Report() {
               value={formik.values.client_id}
             />
           </div>
+          <p style={{ color: "red" }}> {formik.errors.client_id}</p>
           <div className="contextDiv">
             <label htmlFor="context">Report Summary</label>
             <br></br>
@@ -103,6 +105,7 @@ function Report() {
               value={formik.values.context}
             />
           </div>
+          <p style={{ color: "red" }}> {formik.errors.context}</p>
           <button type="submit">Submit Report</button>
         </form>
       </div>
