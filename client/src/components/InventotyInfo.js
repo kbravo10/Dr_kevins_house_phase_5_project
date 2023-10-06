@@ -19,13 +19,16 @@ function InventoryInfo({ inv }) {
       body: JSON.stringify({
         action: action,
       }),
+    }).then((r) =>{
+      if(r.status == 204){
+        if (action == "decrease") {
+      setInvCount((invCount) => invCount - 1);
+    } else {
+      setInvCount((invCount) => (invCount = 10));
+    }
+      }
     })
-    if(action == 'decrease'){
-        setInvCount((invCount) => (invCount -1))
-    }
-    else{
-        setInvCount((invCount) => (invCount = 10))
-    }
+    
   }
   return (
     <tbody>

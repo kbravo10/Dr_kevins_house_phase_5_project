@@ -49,8 +49,8 @@ function Medication_times({ userInfo }) {
         },
         body: JSON.stringify(values, null, 2),
       }).then((r) => {
-        if (r.status == 201) {
-          setRefresh(true);
+        if (r.status == 205) {
+          setRefresh(!refresh);
         }
       });
     },
@@ -66,7 +66,7 @@ function Medication_times({ userInfo }) {
       },
     })
       .then((r) => r.json())
-      .then((data) => setRefresh(true));
+      .then((data) => setRefresh(!refresh));
   }
 
   function handleAddButtn(e) {

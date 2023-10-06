@@ -17,7 +17,8 @@ class Signup(Resource):
             json = request.get_json()
             new_employee = Employee(
                 name = json['name'],
-                username = json['username']
+                username = json['username'],
+                admin = 0
             )
             new_employee.password_hash = json['password']
 
@@ -31,7 +32,7 @@ class Signup(Resource):
             }
             return user_dict, 201
         except Exception:
-            return {'errors': 'Invalid Information'}
+            return {'errors': 'Unprocessable Entity'}, 422
    
     
 #check if user logged in
@@ -81,20 +82,26 @@ class Logout(Resource):
 @app.route('/inventory')
 def inventory():
     inventory = Inventory.query.all()
-    inventory_dict = [inv.to_dict() for inv in inventory]
-    return inventory_dict, 200
+    if inventory:
+        inventory_dict = [inv.to_dict() for inv in inventory]
+        return inventory_dict, 200
+    else:
+        return {}, 204
 
 class InventoryId(Resource):
     def patch(self, id):
         json = request.get_json()
         record = Inventory.query.filter(Inventory.id == id).first()
-        if json['action'] == 'decrease':
-            record.count_inventory = record.count_inventory - 1
+        if record:
+            if json['action'] == 'decrease':
+                record.count_inventory = record.count_inventory - 1
+            else:
+                record.count_inventory = 10
+            db.session.add(record)
+            db.session.commit()
+            return {},204
         else:
-            record.count_inventory = 10
-        db.session.add(record)
-        db.session.commit()
-        return {},204
+            return {}, 200
 
 
 #medication schedule route
@@ -107,8 +114,6 @@ class MedicationTimes(Resource):
         json = request.get_json()
         print(json)
         try:
-            print('im in')
-            print(type(json['time_slot']))
             time = ""
             if int(json['time_slot']) < 10:
                 time = '0' + json['time_slot'] + ':00'
@@ -123,11 +128,9 @@ class MedicationTimes(Resource):
             )
             db.session.add(new_time_slot)
             db.session.commit()
-            print('im commited')
-            return {},201
+            return {},205
         except Exception:
-            print('no good')
-        return {}, 200
+            return {'errors': 'Unprocessable Entity'}, 422
 
 class MedicationTimesId(Resource):
     def get(self, id):
@@ -140,7 +143,7 @@ class MedicationTimesId(Resource):
         request_dict = record.to_dict()
         db.session.add(record)
         db.session.commit()
-        return request_dict, 200
+        return {}, 204
     def delete(self, id):
         record = Med_times.query.filter(Med_times.id == id).first()
         db.session.delete(record)

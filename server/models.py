@@ -181,6 +181,11 @@ class Employee(db.Model, SerializerMixin):
     def validates_name(self, key, employees):
         if len(employees) != 0:
             return employees
+    
+    @validates('_password_hash')
+    def validates_password(self, key, employees):
+        if len(employees) != 0:
+            return employees
 
     @validates('username')
     def validates_email(self, key, employees):

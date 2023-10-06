@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Login({ onLogin }) {
+  const [error, setError] = useState([]);
   function handleSubmitLogin(event) {
     event.preventDefault();
     const loginForm = Object.fromEntries(new FormData(event.target).entries());
@@ -14,7 +15,7 @@ function Login({ onLogin }) {
       if (r.ok) {
         r.json().then((data) => onLogin(data));
       } else {
-        r.json().then((err) => console.log(err));
+        r.json().then((err) => setError(err));
       }
     });
   }
@@ -31,9 +32,13 @@ function Login({ onLogin }) {
         username: signupform.username,
         password: signupform.password,
       }),
-    })
-      .then((r) => r.json())
-      .then((data) => onLogin(data));
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => onLogin(data));
+      } else {
+        r.json().then((err) => setError(err));
+      }
+    });
   }
   return (
     <div class="text-center">
@@ -50,6 +55,7 @@ function Login({ onLogin }) {
           <button type="submit">Login</button>
         </div>
       </form>
+      <p style={{ color: "red" }}>{error.errors}</p>
       <br></br>
       <br></br>
       <form className="signupForm" onSubmit={handleSubmitSignup}>
@@ -68,6 +74,7 @@ function Login({ onLogin }) {
         </div>
         <button type="submit">Make Account</button>
       </form>
+      <p style={{ color: "red" }}>{error.errors}</p>
     </div>
   );
 }
