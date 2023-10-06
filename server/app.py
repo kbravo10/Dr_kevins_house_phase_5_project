@@ -18,7 +18,7 @@ class Signup(Resource):
             new_employee = Employee(
                 name = json['name'],
                 username = json['username'],
-                admin = 0
+                admin = 0 
             )
             new_employee.password_hash = json['password']
 

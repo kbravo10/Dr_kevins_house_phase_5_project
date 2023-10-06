@@ -103,10 +103,10 @@ if __name__ == '__main__':
 
         #add employee seed
         emails = [
-        'userOne@google.com',
-        'userTwo@google.com',
-        'userThree@google.com',
-        'userFour@google.com',
+        'userOne@doctork.com',
+        'userTwo@doctork.com',
+        'userThree@doctork.com',
+        'userFour@doctork.com',
         ]
         employees = []
         for i in range(len(emails)):
