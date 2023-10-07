@@ -104,6 +104,7 @@ class Med_times(db.Model, SerializerMixin):
     signed_off = db.Column(db.Integer, db.ForeignKey('employees.id'))
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     medication_id = db.Column(db.Integer, db.ForeignKey('medications.id'))
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     clients = db.relationship('Client', back_populates = 'medications')
     medications = db.relationship('Medication', back_populates = 'clients')
@@ -172,6 +173,7 @@ class Employee(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True, nullable = False)
     _password_hash = db.Column(db.String, nullable=False)
     admin = db.Column(db.Integer)
+    number = db.Column(db.String)
 
     med_times = db.relationship('Med_times', backref = 'employee')
     reports = db.relationship('Report', backref = 'employee')

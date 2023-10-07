@@ -104,7 +104,8 @@ tr{
   margin-left: 200px;
   margin-top: 10px;
   margin-bottom: 10px;
-  height: fit-contentu;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 .bioDiv{

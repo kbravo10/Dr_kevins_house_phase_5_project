@@ -22,7 +22,9 @@ function ReportInfo() {
         <h1>Report made at : </h1>
         <h3>{report.created_at}</h3>
       </div>
+      <br></br>
       <div className="contentDiv">
+        <h2>Summary/Report</h2>
         <p>{report.context}</p>
       </div>
     </div>

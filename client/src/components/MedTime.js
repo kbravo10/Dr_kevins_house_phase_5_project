@@ -33,6 +33,9 @@ function MedTime({ mt, userInfo }) {
             >
               {signedOff}
             </button>
+            {mt.updated_at != null ? (
+              <span>-time stamp: {mt.updated_at}</span>
+            ) : null}
           </td>
           <td>
             {mt.client_id}. {mt.clients.name}

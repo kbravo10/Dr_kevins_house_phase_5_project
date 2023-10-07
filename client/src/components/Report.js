@@ -97,8 +97,9 @@ function Report() {
           <div className="contextDiv">
             <label htmlFor="context">Report Summary</label>
             <br></br>
-            <input
-              style={{width:'60vw', height: '20vw', textAlignVertical: 'top'}}
+            <textarea
+              style={{width:'60vw', height: '10vw', text:'left'}}
+              type="text"
               id="context"
               name="context"
               onChange={formik.handleChange}
