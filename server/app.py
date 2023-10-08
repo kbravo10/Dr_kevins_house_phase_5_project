@@ -121,7 +121,6 @@ class MedicationTimes(Resource):
         return med_time_response , 200
     def post(self):
         json = request.get_json()
-        print(json)
         try:
             client = Client.query.filter(Client.name == json['client_name']).first()
             client_id = client.id
@@ -132,7 +131,6 @@ class MedicationTimes(Resource):
                 time = '0' + json['time_slot'] + ':00'
             else:
                 time = json['time_slot'] + ':00'
-            print(time)
             new_time_slot = Med_times(
                 time_slot = time,
                 amount = 'NA',
@@ -166,7 +164,6 @@ class MedicationTimesId(Resource):
 
 @app.route('/clients')
 def clients():
-    print(session.get('user_id'))
     clients = Client.query.all()
     client_dict = [c.to_dict() for c in clients]    
     return client_dict,200
@@ -190,9 +187,7 @@ class ClientID(Resource):
 @app.route('/doctors')
 def doctors():
     doctors = Doctor.query.all()
-    print(doctors)
     doctor_dict = [doc.to_dict() for doc in doctors]
-    # print(doctor_dict)
     return doctor_dict,200
 
 class DoctorId(Resource):
@@ -233,10 +228,8 @@ class Reports(Resource):
         return reports_response, 200
     def post(self):
         json = request.get_json()
-        print(json)
         try: 
             client_name = Client.query.filter(Client.name == json['client_name']).first()
-            print(client_name.name)
             new_report = Report(
                 type_of_report= json['type_of_report'],
                 context= json['context'],

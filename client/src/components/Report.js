@@ -18,7 +18,7 @@ function Report() {
         setReports(data.report);
         setClientName(data.client_name);
       });
-  }, []);
+  }, [refresh]);
 
   //declare requirements for report form
   const formSchema = yup.object().shape({
@@ -47,7 +47,7 @@ function Report() {
         body: JSON.stringify(values, null, 2),
       }).then((r) => {
         if (r.status == 201) {
-          setRefresh((refresh) => (refresh = true));
+          setRefresh(!refresh);
         }
       });
     },
