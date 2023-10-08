@@ -11,15 +11,6 @@ from config import app, db, api
 # Add your model imports
 from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
-@app.route('/')
-def Home():
-    client_basic = Client.query.all()
-    medication_basic = Medication.query.all()
-    client_basic_name = [c.name for c in client_basic]
-    medication_basic_name = [m.name for m in medication_basic]
-    print(client_basic_name)
-
-
 class Signup(Resource):
     def post(self):
         try:
