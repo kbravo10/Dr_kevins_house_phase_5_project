@@ -19,8 +19,8 @@ function Clients() {
       {clients.map((client, index) => {
         return (
           <div key={index} className="clientDisplay">
-            <Link className='link' to={`/clients/${client.id}`}>
-              ID:{client.id} - {client.name} 
+            <Link className="link" to={`/clients/${client.id}`}>
+              ID:{client.id} - {client.name}
             </Link>
           </div>
         );

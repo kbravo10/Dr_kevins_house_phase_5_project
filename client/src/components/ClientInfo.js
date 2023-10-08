@@ -17,11 +17,7 @@ function ClientInfo() {
           <h3>Name: {client.name}</h3>
           <h2>Age: {client.age}</h2>
         </div>
-        <img
-          className="cardImage"
-          alt="oops"
-          src={client.image}
-        />
+        <img className="cardImage" alt="oops" src={client.image} />
       </div>
       <br></br>
       <div className="bioDiv">

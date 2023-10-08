@@ -25,9 +25,7 @@ function Inventory() {
           </tr>
         </thead>
         {inventory.map((inv, index) => {
-          return (
-            <InventoryInfo key={index} inv={inv} />
-          );
+          return <InventoryInfo key={index} inv={inv} />;
         })}
       </table>
     </div>

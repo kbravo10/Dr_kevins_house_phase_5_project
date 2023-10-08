@@ -8,6 +8,8 @@ function EmployeeInfo({ employee }) {
         <br></br>
         <h3>username/email:</h3>
         <p>{employee.username}</p>
+        <h3>phone number:</h3>
+        <p>{employee.number}</p>
         <h3>ADMIN:</h3>
         {employee.admin == 1 ? <p>YES</p> : <p>NO</p>}
       </div>

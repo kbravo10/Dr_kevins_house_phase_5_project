@@ -113,7 +113,8 @@ if __name__ == '__main__':
             employee = Employee(
                 name = fake.name(),
                 username = emails[i],
-                admin = randint(0,1)
+                admin = randint(0,1),
+                number = fake.phone_number()
             )
             employee.password_hash = "pass"
             db.session.add(employee)

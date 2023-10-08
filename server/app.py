@@ -232,23 +232,20 @@ def employees():
 class Reports(Resource):
     def get(self):
         report = Report.query.all()
-        reports = []
-        for r in report:
-            time_stamp = r.created_at
-            report_dict = {
-                'id': r.id,
-                'type_of_report': r.type_of_report,
-                'client_name': r.client_name,
-                'time_stamp': str(time_stamp),
-            }
-            reports.append(report_dict)
-        return reports, 200
+        report_dict = [r.to_dict() for r in report]
+        client = Client.query.all()
+        client_name = [c.name for c in client]
+        reports_response = {
+            'report': report_dict,
+            'client_name': client_name,
+        }
+        return reports_response, 200
     def post(self):
         json = request.get_json()
         print(json)
         try: 
-            client_name = Client.query.filter(Client.id == json['client_id']).first()
-            print(client_name.id)
+            client_name = Client.query.filter(Client.name == json['client_name']).first()
+            print(client_name.name)
             new_report = Report(
                 type_of_report= json['type_of_report'],
                 context= json['context'],
@@ -259,7 +256,6 @@ class Reports(Resource):
             db.session.commit()
             return {'message': 'object created'}, 201
         except Exception:
-            print('not good')
             return {'errors': 'Unprcessible '}
 class ReportId(Resource):
     def get(self, id):

@@ -8,22 +8,26 @@ function Report() {
   const [reports, setReports] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [clientName, setClientName] = useState([]);
 
   //fetch statem,ent to get data from report from backend
   useEffect(() => {
     fetch("/reports")
       .then((r) => r.json())
-      .then((data) => setReports((reports) => (reports = data)));
+      .then((data) => {
+        setReports(data.report);
+        setClientName(data.client_name);
+      });
   }, []);
 
   //declare requirements for report form
   const formSchema = yup.object().shape({
-    type_of_report: yup.string(),
+    type_of_report: yup.string().min(1).required("cannot be blank"),
     context: yup
       .string()
-      .min(20)
-      .required("Must be at least 20 characters long."),
-    client_id: yup.number().integer().positive(),
+      .min(25)
+      .required("Must be at least 25 characters long."),
+    client_name: yup.string().required("cannot be blank"),
   });
 
   //handle making reports with the correct inputs
@@ -31,7 +35,7 @@ function Report() {
     initialValues: {
       type_of_report: "",
       context: "",
-      client_id: "",
+      client_name: "",
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -57,7 +61,8 @@ function Report() {
             return (
               <div key={index}>
                 <Link className="link" to={`/reports/${report.id}`}>
-                  {report.type_of_report} -- {report.client_name} -- {report.time_stamp}
+                  {report.type_of_report} -- {report.client_name} --{" "}
+                  {new Date(report.created_at).toDateString()}
                 </Link>
               </div>
             );
@@ -75,7 +80,7 @@ function Report() {
               name="type_of_report"
               onChange={formik.handleChange}
             >
-              <option value="none">none</option>
+              <option value={null}></option>
               <option value="small injury">Small Injury</option>
               <option value="Emergency">Emergency</option>
               <option value="End of shift">End of Shift</option>
@@ -83,22 +88,28 @@ function Report() {
           </div>
           <p style={{ color: "red" }}> {formik.errors.type_of_report}</p>
           <div className="clientReport">
-            <label htmlFor="client_id">
-              Client involved- if no client involved leave blank
-            </label>
-            <input
-              id="client_id"
-              name="client_id"
+            <label htmlFor="client_id">Client involved</label>
+            <select
+              id="client_name"
+              name="client_name"
               onChange={formik.handleChange}
-              value={formik.values.client_id}
-            />
+            >
+              <option value={null}></option>
+              {clientName.map((name, index) => {
+                return (
+                  <option key={index} value={name}>
+                    {name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <p style={{ color: "red" }}> {formik.errors.client_id}</p>
+          <p style={{ color: "red" }}> {formik.errors.client_name}</p>
           <div className="contextDiv">
             <label htmlFor="context">Report Summary</label>
             <br></br>
             <textarea
-              style={{width:'60vw', height: '10vw', text:'left'}}
+              style={{ width: "60vw", height: "10vw", text: "left" }}
               type="text"
               id="context"
               name="context"

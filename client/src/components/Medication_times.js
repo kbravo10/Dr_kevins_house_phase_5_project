@@ -24,17 +24,16 @@ function Medication_times({ userInfo }) {
   }, [refresh]);
 
   const formSchema = yup.object().shape({
-    time_slot: yup.number().integer(),
+    time_slot: yup.number().integer().required("cannot be blank"),
     // amount: yup.string(),
-    client_name: yup.string(),
-    medication_name: yup.string(),
+    client_name: yup.string().required("cannor be blank"),
+    medication_name: yup.string().required("cannot be blank"),
   });
 
   //handle the user wanting to add more medication times
   const formik = useFormik({
     initialValues: {
       time_slot: "",
-      // amount: "",
       client_name: "",
       medication_name: "",
     },
@@ -101,6 +100,7 @@ function Medication_times({ userInfo }) {
               name="time_slot"
               onChange={formik.handleChange}
             >
+              <option value={null}></option>
               {[...Array(24).keys()].map((time, index) => {
                 return (
                   <option key={index} value={time}>
@@ -118,6 +118,7 @@ function Medication_times({ userInfo }) {
               name="client_name"
               onChange={formik.handleChange}
             >
+              <option value={null}></option>
               {clientName.map((name, index) => {
                 return (
                   <option key={index} value={name}>
@@ -126,6 +127,7 @@ function Medication_times({ userInfo }) {
                 );
               })}
             </select>
+            <p style={{ color: "red" }}> {formik.errors.client_name}</p>
 
             <br></br>
             <label htmlFor="medication_name">Choose medication</label>
@@ -134,14 +136,17 @@ function Medication_times({ userInfo }) {
               name="medication_name"
               onChange={formik.handleChange}
             >
-              {medName.map((name, index) =>{
-                return(
+              <option value={null}></option>
+              {medName.map((name, index) => {
+                return (
                   <option key={index} value={name}>
                     {name}
                   </option>
-                )
+                );
               })}
             </select>
+            <p style={{ color: "red" }}> {formik.errors.medication_name}</p>
+
             <button type="submit">Submit</button>
           </form>
         </div>

@@ -7,7 +7,7 @@ function DoctorInfo({ docInfo }) {
       <h3>E-mail: {docInfo.email}</h3>
       <h3>Phone #: {docInfo.number}</h3>
       <h3>Clients: </h3>
-      
+
       {docInfo.clients.map((client, index) => {
         return (
           <li key={index} className="listRelationship">

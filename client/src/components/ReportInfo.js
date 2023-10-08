@@ -10,7 +10,6 @@ function ReportInfo() {
       .then((r) => r.json())
       .then((data) => setReport((report) => (report = data)));
   }, [params.id]);
-
   return (
     <div className="reportDiv">
       <div className="reportHeaderDiv">
@@ -20,7 +19,7 @@ function ReportInfo() {
         </h3>
         <br></br>
         <h1>Report made at : </h1>
-        <h3>{report.created_at}</h3>
+        <h3>{new Date(report.created_at).toDateString()}</h3>
       </div>
       <br></br>
       <div className="contentDiv">

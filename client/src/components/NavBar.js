@@ -32,7 +32,9 @@ function NavBar({ onLogout }) {
       <NavLink to="/reports" exact className="navlink">
         REPORTS
       </NavLink>
-      <button className="navlink" onClick={onHandleLogout}>LOG-OUT</button>
+      <button className="navlink" onClick={onHandleLogout}>
+        LOG-OUT
+      </button>
     </div>
   );
 }
