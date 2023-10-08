@@ -1,70 +1,170 @@
-# Getting Started with Create React App
+# Doctor K House
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project requirements 
+You must meet the following Phase 5 Project Minimum Requirements:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Use a Flask/SQLAlchemy API backend with a React frontend.
+- Have at least 4 models on the backend, that include the following:
+    - At least 1 many-to-many relationship.
+    - Full CRUD actions for at least one resource, following REST conventions.
+    - User can interact with all models, directly or indirectly (no unused models).
+- Have at least 3 different client-side routes using React Router. Be sure to include a nav bar or other UI element that allows users to navigate between routes.
+- Implement password hashing and authentication.
+- Validations implemented on frontend and backend
+    - Use SQLAlchemy validations to verify and protect data on the backend.
+    - Use forms and validation through Formik on all input.
+        - At least one data type validation.
+        - At least one string/number format validation.
+- Connect the client and server using fetch().
+- [optional/highly recommended] Implement something new not taught in the curriculum. (Check in with your instructor to ensure the scope of your idea is appropriate.)
+- [optional/highly recommended] Implement useContext or Redux.
+- [optional/highly recommended] Fully deploy and host your project.
 
-### `npm test`
+## Creating project
+Downloaded the python-p4-project-template and modified the name and deleted the metadata git github and canvas. I created a new repo on github and connected my local repo to my github. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Started my project
+Downloaded the dependencies for my back end
 
-### `npm run build`
+    $pipenv install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+and entered the pip enviroment with
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    $pipenv shell
+Ran 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    $python server/app
 
-### `npm run eject`
+to test that my back end project was working
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+For the front end i downloaded the depencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    $npm install --prefix client
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Ran
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    $npm start --prefix client
 
-## Learn More
+to start the project and see if it was running
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To generate my my database i enetered my pip enviroment with pipenv shell
+I enetered my server file by with a cd server command
+Created my instance and migrations 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    $flask db init
+    $ flask db upgrade head
 
-### Code Splitting
+## functionality
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## application
+When the page loads are two options.
+option one is to log in to start the application with the correct user information. the user must input he correct username and password combination in order to enter the program. If the user inputs incorrect inforamtion they are greeted with a error message that they are unathorized. The user inputs are sent for authentication to the back end. If the inputs provided are correct then the user is allowed entry to the homepage. 
 
-### Analyzing the Bundle Size
+    function handleSubmitLogin(event) {
+    event.preventDefault();
+    const loginForm = Object.fromEntries(new FormData(event.target).entries());
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginForm),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => onLogin(data));
+      } else {
+        r.json().then((err) => setError(err));
+      }
+    });
+    }
+The other option is rigth bellow and it aloows the user to created a new account with there user name and own password. The email is validated by both the front end part of the project and the back end that it must have the format of an email. None of the fields can be left empty in oder for the inputs be valid and a user to be put into the database. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+      function handleSubmitSignup(event) {
+    event.preventDefault();
+    const signupform = Object.fromEntries(new FormData(event.target).entries());
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: signupform.name,
+        username: signupform.username,
+        password: signupform.password,
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => onLogin(data));
+      } else {
+        r.json().then((err) => setError(err));
+      }
+    })}
 
-### Making a Progressive Web App
+once the user is allowed into the app there is a navigation bar that list all the options that will lead to all routes in the project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### list of clients 
+In this part of the app the user(aka the employee) is given a list of options. Each is a link to individual clients. I used 
 
-### Advanced Configuration
+    import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+in order to use the link element. A useEffect and a fetch method where used to aquire the reuired information to give the user the informaton reuired to be able to follow the links. 
 
-### Deployment
+Depending on the link clicked the user is then routed to the ClientInfo component. When the page loads the employee can see a client profile with information about the client along with there doctor. This is possible because of useParams. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-### `npm run build` fails to minify
+I am able to ge the user id number from the route. Again i used a useEffect and fetch method combination. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Medication Schedule
+When the user chooses the medication schedule link the are routed to the corresponding page. At the top there are to buttons.
+
+*Add time slot*
+
+If the user selects to add a time slot, a form is then shown. The form has three inputs that user need to  choose inputs for for the requet to go threw. The  time slot option has a range form 00:00 to 23:00. These option represent time slots. The next field list is the client. The options for this field are a list of names all that belong to a specific client. The final field is the medication poptions. Names of the different medications are all listed and the user must select one of these. There is some validations in the front end that prevent he user from leaving any of the fields empty. 
+
+*Remove time slot*
+
+When the user selects this button they are prompted to choose any of the selected times to delete in both my database and from the clients view. 
+
+The rest of the page is a chart that shows all the medication schedules with all the clients time shedules and the medication required. There is a button under signed off section that will say not sigmned off if the time slot has not been fufilled. When clicked the button is filled with tyhe users name. When the user is logged in only that user name is used for the sign off. This enforces and protects all other user from using any name except there own for accountability. 
+
+### Inventory
+This link routes the user to the inventory page. This page has a table that lists all the medical equipmenmt in the building. There are two buttons under the number of storage column.
+
+*decrease by 1*
+
+When the user selects this option there a patch request sent to the backend that decreases the number by one and modifies the database. Also the effect is seen instanly for the user.
+
+*restock*
+
+This button sends a patch request to the backend that resets the number in stoclk to ten. This modifies the database and can also be seen on the frontend by the user instanly. 
+
+### List of Doctors
+This link routes the user to a page that displays doctor information. This is a contact information page. Each card hold the information of the doctor inclusing a list cl;ients that they attend to. This is done by using a fetch request to my backend. 
+
+### List of Employees 
+The list of employees route is very similar to the doctors one. It gives you a information for every employee displayed in cards. The only main diference from this part of the project from the rest is that its only allowed to be viewed by people with permisions. This can be seen when a user with no permisiions get an accessed denied message and people with the correct permisions can see the the employee information. This works because the user that logs is automatically saved into a session in the backend. The backend then determines what information is passed to the front end so that whoever wants to see the information must be the correct user. 
+
+      return (
+    <div className="cards">
+      <h1>List of Employees</h1>
+      {errors.errors != "Access denied" ? (
+        employees.map((empl, index) => {
+          return (
+            <div key={index}>
+              <EmployeeInfo employee={empl} />
+            </div>
+          );
+        })
+      ) : (
+        <h1 style={{ backgroundColor: "red" }}>{errors.errors}</h1>
+      )}
+    </div>
+  );
+  
+## Models.py
+For my models I created classes that reresent each table i wanted to include for my project. 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ClientInfo from "./ClientInfo";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Clients() {
