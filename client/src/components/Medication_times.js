@@ -5,6 +5,8 @@ import MedTime from "./MedTime";
 function Medication_times({ userInfo }) {
   //declare usestate to hold med times from backend project
   const [med_times, setMed_times] = useState([]);
+  const [clientName, setClientName] = useState([]);
+  const [medName, setMedName] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [addButton, setAddButton] = useState(false);
   const [removeButton, setRemoveButton] = useState(false);
@@ -14,22 +16,18 @@ function Medication_times({ userInfo }) {
   useEffect(() => {
     fetch("/medication_times")
       .then((r) => r.json())
-      .then((data) => setMed_times((med_times) => (med_times = data)));
+      .then((data) => {
+        setMed_times(data.med_time);
+        setClientName(data.client_name);
+        setMedName(data.med_names);
+      });
   }, [refresh]);
 
   const formSchema = yup.object().shape({
     time_slot: yup.number().integer(),
     // amount: yup.string(),
-    client_id: yup
-      .number()
-      .integer()
-      .positive()
-      .required("must enter valid id"),
-    medication_id: yup
-      .number()
-      .integer()
-      .positive()
-      .required("must enter valid id"),
+    client_name: yup.string(),
+    medication_name: yup.string(),
   });
 
   //handle the user wanting to add more medication times
@@ -37,8 +35,8 @@ function Medication_times({ userInfo }) {
     initialValues: {
       time_slot: "",
       // amount: "",
-      client_id: "",
-      medication_id: "",
+      client_name: "",
+      medication_name: "",
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -114,22 +112,36 @@ function Medication_times({ userInfo }) {
             <p style={{ color: "red" }}> {formik.errors.time_slot}</p>
             <br></br>
 
-            <label htmlFor="signed_off">Enter the clients id</label>
-            <input
-              id="client_id"
-              name="client_id"
+            <label htmlFor="client_name">Choose a client</label>
+            <select
+              id="client_name"
+              name="client_name"
               onChange={formik.handleChange}
-              value={formik.values.client_id}
-            />
+            >
+              {clientName.map((name, index) => {
+                return (
+                  <option key={index} value={name}>
+                    {name}
+                  </option>
+                );
+              })}
+            </select>
 
             <br></br>
-            <label htmlFor="signed_off">enter medication id</label>
-            <input
-              id="medication_id"
-              name="medication_id"
+            <label htmlFor="medication_name">Choose medication</label>
+            <select
+              id="medication_name"
+              name="medication_name"
               onChange={formik.handleChange}
-              value={formik.values.medication_id}
-            />
+            >
+              {medName.map((name, index) =>{
+                return(
+                  <option key={index} value={name}>
+                    {name}
+                  </option>
+                )
+              })}
+            </select>
             <button type="submit">Submit</button>
           </form>
         </div>

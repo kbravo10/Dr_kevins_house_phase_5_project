@@ -118,22 +118,36 @@ class MedicationTimes(Resource):
     def get(self):
         med_times = Med_times.query.order_by(Med_times.time_slot).all()
         med_times_dict = [mt.to_dict() for mt in med_times]
-        return med_times_dict , 200
+        client = Client.query.all()
+        client_basic_name = [c.name for c in client]
+        medication = Medication.query.all()
+        med_name = [m.name for m in medication]
+        med_time_response = {
+            'med_time': med_times_dict,
+            'client_name': client_basic_name,  
+            'med_names' : med_name
+        }
+        return med_time_response , 200
     def post(self):
         json = request.get_json()
         print(json)
         try:
+            client = Client.query.filter(Client.name == json['client_name']).first()
+            client_id = client.id
+            med = Medication.query.filter(Medication.name == json['medication_name']).first()
+            medication_id = med.id
             time = ""
             if int(json['time_slot']) < 10:
                 time = '0' + json['time_slot'] + ':00'
             else:
                 time = json['time_slot'] + ':00'
+            print(time)
             new_time_slot = Med_times(
                 time_slot = time,
                 amount = 'NA',
                 signed_off = '------Not Signed Off------',
-                client_id = json['client_id'],
-                medication_id = json['medication_id']
+                client_id = client_id,
+                medication_id = medication_id
             )
             db.session.add(new_time_slot)
             db.session.commit()

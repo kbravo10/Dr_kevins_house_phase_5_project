@@ -17,7 +17,7 @@ function MedTime({ mt, userInfo }) {
         signed_off: userInfo.name,
       }),
     }).then((res) => {
-      if (res.status == 204) setColor((color) => (color = "green"));
+      if (res.status === 204) setColor((color) => (color = "green"));
     });
   }
 

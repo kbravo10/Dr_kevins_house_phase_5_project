@@ -63,7 +63,7 @@ class Client(db.Model, SerializerMixin):
             return clients
 
     def __repr__(self):
-        return f'name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
+        return f'id: {self.id}, name: {self.name}, age: {self.age}, doctor id: {self.doctor_id}'
 
 #create a class medication
 class Medication(db.Model, SerializerMixin):
