@@ -3,12 +3,16 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function ClientInfo() {
   const [client, setClient] = useState([]);
+  const [meds, setMeds] = useState([]);
   const params = useParams();
 
   useEffect(() => {
     fetch(`/clients/${params.id}`)
       .then((r) => r.json())
-      .then((data) => setClient(data));
+      .then((data) => {
+        setClient(data);
+        setMeds(data.medications);
+      });
   }, [params.id]);
   return (
     <div className="cardInfo">
@@ -28,6 +32,17 @@ function ClientInfo() {
       <div className="medicalContactDiv">
         <h3>Doctor: {client.doctor}</h3>
         <h3>phone #: {client.doctor_phone}</h3>
+      </div>
+      <br></br>
+      <div className="medicationDiv">
+        <h3>Medications:</h3>
+        {meds.map((med, index) => {
+          return(
+            <p key={index}>
+              {med}
+            </p>
+          )
+        })}
       </div>
     </div>
   );

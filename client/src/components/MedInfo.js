@@ -7,7 +7,6 @@ function MedInfo({ med }) {
         <td scope="row">{med.name}</td>
         <td>{med.medication_use}</td>
       </tr>
-      <p></p>
     </tbody>
   );
 }

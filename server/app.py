@@ -172,7 +172,9 @@ def clients():
 class ClientID(Resource):
     def get(self, id):
         client = Client.query.filter(Client.id == id).first()
-
+        medications = []
+        for meds in client.medications:
+            medications.append(meds.medications.name)
         client_dict = {
             'id': client.id,
             'name': client.name,
@@ -182,6 +184,7 @@ class ClientID(Resource):
             'doctor': client.doctor.name,
             'doctor_phone': client.doctor.number,
             'doctor_id': client.doctor_id,
+            'medications': medications,
         }
         return client_dict, 200 
 
