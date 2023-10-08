@@ -5,7 +5,7 @@ function Login({ onLogin }) {
   function handleSubmitLogin(event) {
     event.preventDefault();
     const loginForm = Object.fromEntries(new FormData(event.target).entries());
-    fetch("/login", {
+    fetch("https://phase-5-api-o5ni.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
