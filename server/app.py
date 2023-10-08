@@ -11,6 +11,7 @@ from config import app, db, api
 # Add your model imports
 from models import Doctor, Client,Med_times,Medication,Inventory,Employee,Report
 
+#allow the user to make an account
 class Signup(Resource):
     def post(self):
         try:

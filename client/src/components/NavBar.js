@@ -11,6 +11,9 @@ function NavBar({ onLogout }) {
 
   return (
     <div className="navbar" class="inline-block">
+      <NavLink to="/" exact className="navlink">
+        Home
+      </NavLink>
       <NavLink to="/clients" exact className="navlink">
         List of Clients
       </NavLink>
@@ -32,9 +35,9 @@ function NavBar({ onLogout }) {
       <NavLink to="/reports" exact className="navlink">
         REPORTS
       </NavLink>
-      <button className="navlink" onClick={onHandleLogout}>
+      <NavLink to="/" className="navlink" onClick={onHandleLogout}>
         LOG-OUT
-      </button>
+      </NavLink>
     </div>
   );
 }

@@ -11,12 +11,12 @@ import Report from "./Report";
 import Login from "./Login";
 import ReportInfo from "./ReportInfo";
 import ClientInfo from "./ClientInfo";
+import Home from "./Home";
 
 function App() {
   //set a is logged in state to check if im logged in and display correct page
   //set name from login page and display at top for the welcome
   const [isLogged, setIsLogged] = useState(null);
-  const [errors, setErrors] = useState([]);
 
   //chech session to see if the user is logged in to set the state of is logged
   //used for auto logged in
@@ -38,6 +38,9 @@ function App() {
       <h1>Dr.Kevins House</h1>
       <NavBar onLogout={setIsLogged} />
       <Switch>
+        <Route exact path="/">
+          <Home employee={isLogged}/>
+        </Route>
         <Route exact path="/inventory">
           <Inventory />
         </Route>
