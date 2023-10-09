@@ -46,7 +46,7 @@ function Medication_times({ userInfo }) {
         },
         body: JSON.stringify(values, null, 2),
       }).then((r) => {
-        if (r.status == 205) {
+        if (r.status === 205) {
           setRefresh(!refresh);
         }
       });
@@ -69,7 +69,7 @@ function Medication_times({ userInfo }) {
   function handleAddButtn(e) {
     e.preventDefault();
     setAddButton(true);
-    if (removeButton == true) {
+    if (removeButton === true) {
       setRemoveButton(false);
     }
   }
@@ -77,7 +77,7 @@ function Medication_times({ userInfo }) {
   function handleDeleteButtn(e) {
     e.preventDefault();
     setRemoveButton(true);
-    if (addButton == true) {
+    if (addButton === true) {
       setAddButton(false);
     }
   }

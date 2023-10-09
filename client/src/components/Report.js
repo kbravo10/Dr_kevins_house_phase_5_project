@@ -46,7 +46,7 @@ function Report() {
         },
         body: JSON.stringify(values, null, 2),
       }).then((r) => {
-        if (r.status == 201) {
+        if (r.status === 201) {
           setRefresh(!refresh);
         }
       });

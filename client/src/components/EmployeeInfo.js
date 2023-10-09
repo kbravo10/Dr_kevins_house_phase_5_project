@@ -11,7 +11,7 @@ function EmployeeInfo({ employee }) {
         <h3>phone number:</h3>
         <p>{employee.number}</p>
         <h3>ADMIN:</h3>
-        {employee.admin == 1 ? <p>YES</p> : <p>NO</p>}
+        {employee.admin === 1 ? <p>YES</p> : <p>NO</p>}
       </div>
     </div>
   );

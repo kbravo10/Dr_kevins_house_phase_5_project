@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Inventory from "./Inventory";
-import Medication_times from "./Medication_times";
+import MedicationTimes from "./MedicationTimes";
 import Clients from "./Clients";
 import Medications from "./Medications";
 import Doctors from "./Doctors";
@@ -45,7 +45,7 @@ function App() {
           <Inventory />
         </Route>
         <Route exact path="/medication_times">
-          <Medication_times userInfo={isLogged} />
+          <MedicationTimes userInfo={isLogged} />
         </Route>
         <Route exact path="/clients">
           <Clients />

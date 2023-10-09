@@ -22,7 +22,7 @@ function Employees() {
   return (
     <div className="cards">
       <h1>List of Employees</h1>
-      {errors.errors != "Access denied" ? (
+      {errors.errors !== "Access denied" ? (
         employees.map((empl, index) => {
           return (
             <div key={index}>

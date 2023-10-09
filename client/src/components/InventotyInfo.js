@@ -5,7 +5,7 @@ function InventoryInfo({ inv }) {
   function onHandleAlter(e) {
     e.preventDefault();
     var action = "";
-    if (e.target.value == "decrease") {
+    if (e.target.value === "decrease") {
       action = "decrease";
     } else {
       action = "restock";
@@ -20,8 +20,8 @@ function InventoryInfo({ inv }) {
         action: action,
       }),
     }).then((r) => {
-      if (r.status == 204) {
-        if (action == "decrease") {
+      if (r.status === 204) {
+        if (action === "decrease") {
           setInvCount((invCount) => invCount - 1);
         } else {
           setInvCount((invCount) => (invCount = 10));
