@@ -39,6 +39,7 @@ class Signup(Resource):
 #check if user logged in
 class CheckSession(Resource):
     def get(self):
+        print(DateTime.now())
         user = Employee.query.filter(Employee.id == session.get("user_id")).first()
         if user:
             user_info = {

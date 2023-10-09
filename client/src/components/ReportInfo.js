@@ -6,7 +6,7 @@ function ReportInfo() {
   const params = useParams();
 
   useEffect(() => {
-    fetch(`/reports/${params.id}`)
+    fetch(`https://phase-5-api-o5ni.onrender.com/reports/${params.id}`)
       .then((r) => r.json())
       .then((data) => setReport((report) => (report = data)));
   }, [params.id]);
@@ -18,8 +18,6 @@ function ReportInfo() {
           {report.type_of_report}- {report.client_name}
         </h3>
         <br></br>
-        <h1>Report made at : </h1>
-        <h3>{new Date(report.created_at).toDateString()}</h3>
       </div>
       <br></br>
       <div className="contentDiv">
