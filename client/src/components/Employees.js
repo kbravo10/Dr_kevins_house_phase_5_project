@@ -8,7 +8,7 @@ function Employees() {
 
   //useeffect to only render once
   useEffect(() => {
-    fetch("https://phase-5-api-o5ni.onrender.com/employees").then((r) => {
+    fetch("/employees").then((r) => {
       if (r.ok) {
         r.json().then((data) =>
           setEmployees((employees) => (employees = data))

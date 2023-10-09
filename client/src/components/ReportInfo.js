@@ -6,7 +6,7 @@ function ReportInfo() {
   const params = useParams();
 
   useEffect(() => {
-    fetch(`https://phase-5-api-o5ni.onrender.com/reports/${params.id}`)
+    fetch(`/reports/${params.id}`)
       .then((r) => r.json())
       .then((data) => setReport((report) => (report = data)));
   }, [params.id]);

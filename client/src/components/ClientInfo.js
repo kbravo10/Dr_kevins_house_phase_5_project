@@ -7,7 +7,7 @@ function ClientInfo() {
   const params = useParams();
 
   useEffect(() => {
-    fetch(`https://phase-5-api-o5ni.onrender.com/clients/${params.id}`)
+    fetch(`/clients/${params.id}`)
       .then((r) => r.json())
       .then((data) => {
         setClient(data);

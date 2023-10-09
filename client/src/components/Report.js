@@ -12,7 +12,7 @@ function Report() {
 
   //fetch statem,ent to get data from report from backend
   useEffect(() => {
-    fetch("https://phase-5-api-o5ni.onrender.com/reports")
+    fetch("/reports")
       .then((r) => r.json())
       .then((data) => {
         setReports(data.report);
@@ -39,7 +39,7 @@ function Report() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("https://phase-5-api-o5ni.onrender.com/reports", {
+      fetch("reports", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
