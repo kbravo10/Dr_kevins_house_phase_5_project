@@ -1,357 +1,305 @@
-# Phase 4 Full-Stack Application Project Template
-
-## Learning Goals
-
-- Discuss the basic directory structure of a full-stack Flask/React application.
-- Carry out the first steps in creating your Phase 4 project.
-
----
-
-## Introduction
-
-Fork and clone this lesson for a template for your full-stack application. Take
-a look at the directory structure before we begin (NOTE: node_modules will be
-generated in a subsequent step):
+# Doctor K House
+
+## There is are admin users
+## run pipenv install
+## run pipenv shell
+## run python server/app.py
+## run npm install --prefix client
+## run npm strat --prefix client
+## in pipenv cd server and run python seed.py
+## option one   username: userOne@doctork.com   password:pass
+## other options userTwo@doctork.com , userThree@doctork.com , userFour@doctork.com  all same password
+
+## attemted deployment
+front- https://one0-01-2023-phase-5-client.onrender.com
+back - https://phase-5-api-o5ni.onrender.com
+youtube - https://youtu.be/pkqrBfaMP3Q
+
+## Project requirements 
+You must meet the following Phase 5 Project Minimum Requirements:
+
+- Use a Flask/SQLAlchemy API backend with a React frontend.
+- Have at least 4 models on the backend, that include the following:
+    - At least 1 many-to-many relationship.
+    - Full CRUD actions for at least one resource, following REST conventions.
+    - User can interact with all models, directly or indirectly (no unused models).
+- Have at least 3 different client-side routes using React Router. Be sure to include a nav bar or other UI element that allows users to navigate between routes.
+- Implement password hashing and authentication.
+- Validations implemented on frontend and backend
+    - Use SQLAlchemy validations to verify and protect data on the backend.
+    - Use forms and validation through Formik on all input.
+        - At least one data type validation.
+        - At least one string/number format validation.
+- Connect the client and server using fetch().
+- [optional/highly recommended] Implement something new not taught in the curriculum. (Check in with your instructor to ensure the scope of your idea is appropriate.)
+- [optional/highly recommended] Implement useContext or Redux.
+- [optional/highly recommended] Fully deploy and host your project.
+
+## Creating project
+Downloaded the python-p4-project-template and modified the name and deleted the metadata git github and canvas. I created a new repo on github and connected my local repo to my github. 
+
+## Started my project
+Downloaded the dependencies for my back end
+
+    $pipenv install
+
+and entered the pip enviroment with
+
+    $pipenv shell
+Ran 
+
+    $python server/app
 
-```console
-$ tree -L 2
-$ # the -L argument limits the depth at which we look into the directory structure
-.
-├── CONTRIBUTING.md
-├── LICENSE.md
-├── Pipfile
-├── README.md
-├── client
-│   ├── README.md
-│   ├── package.json
-│   ├── public
-│   └── src
-└── server
-    ├── app.py
-    ├── config.py
-    ├── models.py
-    └── seed.py
-```
+to test that my back end project was working
 
-A `migrations` folder will be added to the `server` directory in a later step.
+For the front end i downloaded the depencies
 
-The `client` folder contains a basic React application, while the `server`
-folder contains a basic Flask application. You will adapt both folders to
-implement the code for your project .
+    $npm install --prefix client
 
-NOTE: If you did not previously install `tree` in your environment setup, MacOS
-users can install this with the command `brew install tree`. WSL and Linux users
-can run `sudo apt-get install tree` to download it as well.
+Ran
 
-## Where Do I Start?
+    $npm start --prefix client
 
-Just as with your Phase 3 Project, this will likely be one of the biggest
-projects you've undertaken so far. Your first task should be creating a Git
-repository to keep track of your work and roll back any undesired changes.
+to start the project and see if it was running
 
-### Removing Existing Git Configuration
+To generate my my database i enetered my pip enviroment with pipenv shell
+I enetered my server file by with a cd server command
+Created my instance and migrations 
 
-If you're using this template, start off by removing the existing metadata for
-Github and Canvas. Run the following command to carry this out:
+    $flask db init
+    $ flask db upgrade head
 
-```console
-$ rm -rf .git .canvas
-```
+## functionality
 
-The `rm` command removes files from your computer's memory. The `-r` flag tells
-the console to remove _recursively_, which allows the command to remove
-directories and the files within them. `-f` removes them permanently.
+## application
+When the page loads are two options.
+option one is to log in to start the application with the correct user information. the user must input he correct username and password combination in order to enter the program. If the user inputs incorrect inforamtion they are greeted with a error message that they are unathorized. The user inputs are sent for authentication to the back end. If the inputs provided are correct then the user is allowed entry to the homepage. 
+
+    function handleSubmitLogin(event) {
+    event.preventDefault();
+    const loginForm = Object.fromEntries(new FormData(event.target).entries());
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginForm),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => onLogin(data));
+      } else {
+        r.json().then((err) => setError(err));
+      }
+    });
+    }
+The other option is rigth bellow and it aloows the user to created a new account with there user name and own password. The email is validated by both the front end part of the project and the back end that it must have the format of an email. None of the fields can be left empty in oder for the inputs be valid and a user to be put into the database. 
+
+      function handleSubmitSignup(event) {
+    event.preventDefault();
+    const signupform = Object.fromEntries(new FormData(event.target).entries());
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: signupform.name,
+        username: signupform.username,
+        password: signupform.password,
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => onLogin(data));
+      } else {
+        r.json().then((err) => setError(err));
+      }
+    })}
 
-`.git` contains this directory's configuration to track changes and push to
-Github (you want to track and push _your own_ changes instead), and `.canvas`
-contains the metadata to create a Canvas page from your Git repo. You don't have
-the permissions to edit our Canvas course, so it's not worth keeping around.
+once the user is allowed into the app there is a navigation bar that list all the options that will lead to all routes in the project.
 
-### Creating Your Own Git Repo
+### list of clients 
+In this part of the app the user(aka the employee) is given a list of options. Each is a link to individual clients. I used 
 
-First things first- rename this directory! Once you have an idea for a name,
-move one level up with `cd ..` and run
-`mv python-p4-project-template <new-directory-name>` to change its name (replace
-<new-directory-name> with an appropriate project directory name).
+    import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-> **Note: If you typed the `mv` command in a terminal within VS Code, you should
-> close VS Code then reopen it.**
+in order to use the link element. A useEffect and a fetch method where used to aquire the reuired information to give the user the informaton reuired to be able to follow the links. 
 
-> **Note: `mv` actually stands for "move", but your computer interprets this
-> rename as a move from a directory with the old name to a directory with a new
-> name.**
+Depending on the link clicked the user is then routed to the ClientInfo component. When the page loads the employee can see a client profile with information about the client along with there doctor. This is possible because of useParams. 
 
-`cd` back into your new directory and run `git init` to create a local git
-repository. Add all of your local files to version control with `git add --all`,
-then commit them with `git commit -m'initial commit'`. (You can change the
-message here- this one is just a common choice.)
+    import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-Navigate to [GitHub](https://github.com). In the upper-right corner of the page,
-click on the "+" dropdown menu, then select "New repository". Enter the name of
-your local repo, choose whether you would like it to be public or private, make
-sure "Initialize this repository with a README" is unchecked (you already have
-one), then click "Create repository".
+I am able to ge the user id number from the route. Again i used a useEffect and fetch method combination. 
 
-Head back to the command line and enter
-`git remote add origin git@github.com:github-username/new-repository-name.git`.
-NOTE: Replace `github-username` with your github username, and
-`new-repository-name` with the name of your new repository. This command will
-map the remote repository to your local repository. Finally, push your first
-commit with `git push -u origin main`.
-
-Your project is now version-controlled locally and online. This will allow you
-to create different versions of your project and pick up your work on a
-different machine if the need arises.
+### Medication Schedule
+When the user chooses the medication schedule link the are routed to the corresponding page. At the top there are to buttons.
 
----
+*Add time slot*
 
-## Setup
+If the user selects to add a time slot, a form is then shown. The form has three inputs that user need to  choose inputs for for the requet to go threw. The  time slot option has a range form 00:00 to 23:00. These option represent time slots. The next field list is the client. The options for this field are a list of names all that belong to a specific client. The final field is the medication poptions. Names of the different medications are all listed and the user must select one of these. There is some validations in the front end that prevent he user from leaving any of the fields empty. 
 
-### `server/`
+*Remove time slot*
 
-The `server/` directory contains all of your backend code.
+When the user selects this button they are prompted to choose any of the selected times to delete in both my database and from the clients view. 
 
-`app.py` is your Flask application. You'll want to use Flask to build a simple
-API backend like we have in previous modules. You should use Flask-RESTful for
-your routes. You should be familiar with `models.py` and `seed.py` by now, but
-remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and
-SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
+The rest of the page is a chart that shows all the medication schedules with all the clients time shedules and the medication required. There is a button under signed off section that will say not sigmned off if the time slot has not been fufilled. When clicked the button is filled with tyhe users name. When the user is logged in only that user name is used for the sign off. This enforces and protects all other user from using any name except there own for accountability. 
 
-The project contains a default `Pipfile` with some basic dependencies. You may
-adapt the `Pipfile` if there are additional dependencies you want to add for
-your project.
+### Inventory
+This link routes the user to the inventory page. This page has a table that lists all the medical equipmenmt in the building. There are two buttons under the number of storage column.
 
-To download the dependencies for the backend server, run:
+*decrease by 1*
 
-```console
-pipenv install
-pipenv shell
-```
+When the user selects this option there a patch request sent to the backend that decreases the number by one and modifies the database. Also the effect is seen instanly for the user.
 
-You can run your Flask API on [`localhost:5555`](http://localhost:5555) by
-running:
+*restock*
 
-```console
-python server/app.py
-```
+This button sends a patch request to the backend that resets the number in stoclk to ten. This modifies the database and can also be seen on the frontend by the user instanly. 
 
-Check that your server serves the default route `http://localhost:5555`. You
-should see a web page with the heading "Project Server".
+### List of Doctors
+This link routes the user to a page that displays doctor information. This is a contact information page. Each card hold the information of the doctor including a list clients that they attend to. This is done by using a fetch request to my backend. 
 
-### `client/`
+### List of Employees 
+The list of employees route is very similar to the doctors one. It gives you a information for every employee displayed in cards. The only main diference from this part of the project from the rest is that its only allowed to be viewed by people with permisions. This can be seen when a user with no permisiions get an accessed denied message and people with the correct permisions can see the the employee information. This works because the user that logs is automatically saved into a session in the backend. The backend then determines what information is passed to the front end so that whoever wants to see the information must be the correct user. 
 
-The `client/` directory contains all of your frontend code. The file
-`package.json` has been configured with common React application dependencies,
-include `react-router-dom`. The file also sets the `proxy` field to forward
-requests to `"http://localhost:5555". Feel free to change this to another port-
-just remember to configure your Flask app to use another port as well!
+      return (
+    <div className="cards">
+      <h1>List of Employees</h1>
+      {errors.errors != "Access denied" ? (
+        employees.map((empl, index) => {
+          return (
+            <div key={index}>
+              <EmployeeInfo employee={empl} />
+            </div>
+          );
+        })
+      ) : (
+        <h1 style={{ backgroundColor: "red" }}>{errors.errors}</h1>
+      )}
+    </div>
+  );
+  
+### List of medications 
+This page is very simple and similar to the medication schedule. Its a table that shows the name of the medications and what they do. A fetch request is made to the backend and received json data is stored into a state variable and dispayed by using table and mapping. 
 
-To download the dependencies for the frontend client, run:
+### REPORTS
+This part of my front end is shown when the user selects reports link on the navigation. At the top there is a button that allows the user to view past reports or reports just made. 
 
-```console
-npm install --prefix client
-```
+*view reports button*
 
-You can run your React app on [`localhost:3000`](http://localhost:3000) by
-running:
+Each option is a link that redirects the user to a route that displays the report that they choose.
 
-```sh
-npm start --prefix client
-```
+Once a report is selected they are taken to a page that shows the title, the date of the report, and the comtext of the report. This is viewable by any employee in the database. The information is obtained when the fetch request is made when loading that page. The way the request knows what specific report is selected is by using params 
 
-Check that your the React client displays a default page
-`http://localhost:3000`. You should see a web page with the heading "Project
-Client".
+  
+    useEffect(() => {
+      fetch(`/reports/${params.id}`)
+        .then((r) => r.json())
+        .then((data) => setReport((report) => (report = data)));
+    }, [params.id]);
 
-## Generating Your Database
-
-NOTE: The initial project directory structure does not contain the `instance` or
-`migrations` folders. Change into the `server` directory:
-
-```console
-cd server
-```
+### logout
+The final choice in the mavigation bar is a button that sets 
 
-Then enter the commands to create the `instance` and `migrations` folders and
-the database `app.db` file:
+    const [isLogged, setIsLogged] = useState(null);
 
-```
-flask db init
-flask db upgrade head
-```
+  to null and redirects the user to the login page where the next user/employee needs to input there credentials to log in as use the aplications with there selected restrictions if any are set. 
 
-Type `tree -L 2` within the `server` folder to confirm the new directory
-structure:
+## Models.py
+For my models I created classes that repesented each table I wanted to include for my project. 
 
-```console
-.
-├── app.py
-├── config.py
-├── instance
-│   └── app.db
-├── migrations
-│   ├── README
-│   ├── __pycache__
-│   ├── alembic.ini
-│   ├── env.py
-│   ├── script.py.mako
-│   └── versions
-├── models.py
-└── seed.py
-```
+Doctor
 
-Edit `models.py` and start creating your models. Import your models as needed in
-other modules, i.e. `from models import ...`.
+For this class i had columns that described the doctor and also established a relationship with the client table. The doctors table has a one to many relationship, meaning that one doctor can have many clients. The validations include ceratin columns not being able to be empty in any way. The email column was put a validation that it had to be in the style an email. 
 
-Remember to regularly run
-`flask db revision --autogenerate -m'<descriptive message>'`, replacing
-`<descriptive message>` with an appropriate message, and `flask db upgrade head`
-to track your modifications to the database and create checkpoints in case you
-ever need to roll those modifications back.
+client
 
-> **Tip: It's always a good idea to start with an empty revision! This allows
-> you to roll all the way back while still holding onto your database. You can
-> create this empty revision with `flask db revision -m'Create DB'`.**
+The client table just like the doctor has columns that describe and have informaton about the client. Retrictions and validations where set on the client class. Certain field are not allowed to have an empty field in any way. The relationships for the clients are a few more than the doctor class. There is a column that represents the raltionship between the client and the doctor. This relationship is a one to many since every client only has one doctor. The medication relationship is a many to many since one client can have many medications and many a medicatios can have many clients. For the reports relationship its a one to many.
 
-If you want to seed your database, now would be a great time to write out your
-`seed.py` script and run it to generate some test data. Faker has been included
-in the Pipfile if you'd like to use that library.
+Medication
 
----
+The medication class columns that represent the information i need to display on my application for medication. There is a many to many relationship with the client class. there a few restrictions and validations hat restrict certain fields being left empty.
 
-#### `config.py`
+Med_times
 
-When developing a large Python application, you might run into a common issue:
-_circular imports_. A circular import occurs when two modules import from one
-another, such as `app.py` and `models.py`. When you create a circular import and
-attempt to run your app, you'll see the following error:
+This class has the most relationships of the backend. It has its own columns that describe what this table holds but the mojority of the inforamtion is realtionships with other tables. The signed off column has a many to one relationship meaning many times can have a single employee. The client id column has a similar relationship that links many times to one client. The medication id is a many to one relationship because one many time slots can one one medication scheduled. 
 
-```console
-ImportError: cannot import name
-```
+The next to relationships are a little different. the clients and medications values are not only used in the med times class but also help link the  clients and the medications table. With these variables the many to many elationship was able to be established. This is just one way to do this. I choose this way because i was able to create the useful table of med times with all thhis information. 
 
-If you're going to need an object in multiple modules like `app` or `db`,
-creating a _third_ module to instantiate these objects can save you a great deal
-of circular grief. Here's a good start to a Flask config file (you may need more
-if you intend to include features like authentication and passwords):
+Inventory
 
-```py
-# Standard library imports
+This table is like the other tables. The only main difference is that there is no link for thsi class and any other class. No classes are dependent on this  class and visa versa. Validations where set that the amount of items could e negative. The was also validations that some of the columns could not have null or emty string information. 
 
-# Remote library imports
-from flask import Flask
-from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+Reports
 
-# Local imports
+The reports class is like other classes. it has columns specific to itself. Some of the columns have restrictions and validations that do not allow the informationnot to exist or not have an empty field. Another validation is that the content field has to be as least 25 chracters long in order for the session commit to happen, other wise an error is returned to the front end. The relationships made in this field are between the client and also the employee class. These both are many to one relationships because both these columns can only have one id each, but one id can belong to many fields. 
 
-# Instantiate app, set attributes
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+Employee 
 
-# Define metadata, instantiate db
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-db = SQLAlchemy(metadata=metadata)
-migrate = Migrate(app, db)
-db.init_app(app)
+This class has the same thig as other classes with the columns and the relationships. The restrictions and validations are similar to the doctor class where there can be no null values or empty strings. 
 
-# Instantiate REST API
-api = Api(app)
+In the employee class is where I used authentication with Bcrypt. I used this librabry to hash the passwords of users passwords and make it hard for anyone to be able to hack the passwords.
 
-# Instantiate CORS
-CORS(app)
+### app.py
+In this file i took all the information from my models and  turned the desired information from specific classes and turning it into json data. Once a request is received from the front end the process begings and the json data is returned as a reponse along with an http code. 
 
-```
+    user = request.get_json()
+        user_info = Employee.query.filter(Employee.username == user['username']).first()
+        if user_info:
+            if user_info.authenticate(user['password']) == True:
+                user_dict = {
+                    'name': user_info.name,
+                    'id': user_info.id,
+                }
+                session["user_id"] = user_info.id
+                return user_dict, 200
+            else:
+                return {"errors":"Unathorized"}, 401
+        else:
+                return {"errors":"Unathorized"}, 401
 
-Now let's review that last line...
+One route that was not was not displayed as an option for the program wa sthe check session. This route checked if the user was logged in and gave values to certain fields when the request, post requests, where made. 
 
-#### CORS
+    class CheckSession(Resource):
+    def get(self):
+        user = Employee.query.filter(Employee.id == session.get("user_id")).first()
+        if user:
+            user_info = {
+                'username': user.username,
+                'name': user.name, 
+                'id': user.id
+            }
+            return user.to_dict(), 200
+        else:
+            return {'errors': 'Unathorized'}, 401 
 
-CORS (Cross-Origin Resource Sharing) is a system that uses HTTP headers to
-determine whether resources from different servers-of-origin can be accessed. If
-you're using the fetch API to connect your frontend to your Flask backend, you
-need to configure CORS on your Flask application instance. Lucky for us, that
-only takes one line:
+example of a post method that uses the session['user_id']
 
-```py
-CORS(app)
 
-```
+     try: 
+            client_name = Client.query.filter(Client.name == json['client_name']).first()
+            print(client_name.name)
+            new_report = Report(
+                type_of_report= json['type_of_report'],
+                context= json['context'],
+                client_name= client_name.name,
+                employee_id= session.get('user_id')
+            )
+            db.session.add(new_report)
+            db.session.commit()
+            return {'message': 'object created'}, 201
+        except Exception:
+            return {'errors': 'Unprcessible '}
 
-By default, Flask-CORS enables CORS on all routes in your application with all
-fetching servers. You can also specify the resources that allow CORS. The
-following specifies that routes beginning with `api/` allow CORS from any
-originating server:
 
-```py
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+## Contributations
+Pull request are appreciated. Any feed back on improving the project(do's and dont's).
 
-```
+## Citations
+All medications exept adderal:
+- Brennan, D. (2021, October 4). What are the top 10 most prescribed drugs?. MedicineNet. https://www.medicinenet.com/what_are_the_top_10_most_prescribed_drugs/article.htm 
 
-You can also set this up resource-by-resource by importing and using the
-`@cross_origin` decorator:
+luffy image
+- Luffy Gear 5 ! by ranshiiki on DeviantArt. by Ranshiiki on DeviantArt. (n.d.). https://www.deviantart.com/ranshiiki/art/Luffy-Gear-5-975671847 
 
-```py
-@app.route("/")
-@cross_origin()
-def howdy():
-  return "Howdy partner!"
+Adderal description and name:
+- Durbin, K. (n.d.). Adderall: Uses, dosage, Side Effects &amp; Safety Info. Drugs.com. https://www.drugs.com/adderall.html 
 
-```
-
----
-
-## Updating Your README.md
-
-`README.md` is a Markdown file that describes your project. These files can be
-used in many different ways- you may have noticed that we use them to generate
-entire Canvas lessons- but they're most commonly used as homepages for online
-Git repositories. **When you develop something that you want other people to
-use, you need to have a README.**
-
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this lesson's resources for a basic guide to Markdown.
-
-### What Goes into a README?
-
-This README should serve as a template for your own- go through the important
-files in your project and describe what they do. Each file that you edit (you
-can ignore your migration files) should get at least a paragraph. Each function
-should get a small blurb.
-
-You should descibe your application first, and with a good level of detail. The
-rest should be ordered by importance to the user. (Probably routes next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
-
----
-
-## Conclusion
-
-A lot of work goes into a full-stack application, but it all relies on concepts
-that you've practiced thoroughly throughout this phase. Hopefully this template
-and guide will get you off to a good start with your Phase 4 Project.
-
-Happy coding!
-
----
-
-## Resources
-
-- [Setting up a respository - Atlassian](https://www.atlassian.com/git/tutorials/setting-up-a-repository)
-- [Create a repo- GitHub Docs](https://docs.github.com/en/get-started/quickstart/create-a-repo)
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
-- [Python Circular Imports - StackAbuse](https://stackabuse.com/python-circular-imports/)
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
