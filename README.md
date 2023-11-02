@@ -1,14 +1,14 @@
 # Doctor K House
 
-## There is are admin users
-## run pipenv install
-## run pipenv shell
-## run python server/app.py
-## run npm install --prefix client
-## run npm strat --prefix client
-## in pipenv cd server and run python seed.py
-## option one   username: userOne@doctork.com   password:pass
-## other options userTwo@doctork.com , userThree@doctork.com , userFour@doctork.com  all same password
+# There is are admin users
+# run pipenv install
+# run pipenv shell
+# run python server/app.py
+# run npm install --prefix client
+# run npm strat --prefix client
+# in pipenv cd server and run python seed.py
+# option one   username: userOne@doctork.com   password:pass
+# other options userTwo@doctork.com , userThree@doctork.com , userFour@doctork.com  all same password
 
 ## attemted deployment
 front- https://one0-01-2023-phase-5-client.onrender.com
